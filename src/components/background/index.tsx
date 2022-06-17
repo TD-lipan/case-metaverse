@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.less';
-import scene from './scene.mp4';
+import scene from './background.mp4';
 export default function () {
     return (
         <div className={styles.videoDiv}>
