@@ -1,4 +1,4 @@
-.filterBarDefault{
+.filterBar {
   width: 628px;
   height: 88px;
   position: absolute;
@@ -7,4 +7,16 @@
   z-index: 1;
   background-image: url(./images/filter_bar_default.png);
   background-size: 100% auto;
+}
+
+.filterBarDefault:extend(.filterBar) {
+  background-image: url(./images/filter_bar_default.png);
+}
+
+.filterBarHover:extend(.filterBar) {
+  background-image: url(./images/filter_bar_hover.png);
+}
+
+.filterBarSelected:extend(.filterBar) {
+  background-image: url(./images/filter_bar_selected.png);
 }
