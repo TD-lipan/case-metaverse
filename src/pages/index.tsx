@@ -1,10 +1,11 @@
 import styles from './index.less';
-import Background from '../components/background'
+import Background from '../components/background';
+import NavigationBar from '../components/navigation-bar';
 
 export default function IndexPage() {
   return (
     <div>
-      {/* <h1 className={styles.title}>Page index</h1> */}
+      <div className={styles.scene}><NavigationBar /></div>
       <Background />
     </div>
   );
