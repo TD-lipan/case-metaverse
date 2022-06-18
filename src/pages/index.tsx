@@ -5,15 +5,24 @@ import FilterBar from '../components/filter-bar';
 import InputBox from '../components/input-box';
 import MultiTab from '../components/multi-tab';
 import CaseProcessing from '../components/case-processing';
+import Login from '@/components/login';
+import { useState } from 'react';
 
 export default function IndexPage() {
+  const [loginShow, setLoginShow] = useState(true);
   return (
     <div>
-      <NavigationBar />
-      <FilterBar type='default' />
-      <InputBox />
-      <MultiTab index={2} />
-      <CaseProcessing />
+      {loginShow ? (
+        <Login setState={setLoginShow} />
+      ) : (
+        <>
+          <NavigationBar />
+          <FilterBar type="default" />
+          <InputBox />
+          <MultiTab index={2} />
+          <CaseProcessing />
+        </>
+      )}
       <Background />
     </div>
   );
