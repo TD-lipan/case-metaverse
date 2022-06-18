@@ -2,9 +2,13 @@ import React, { useCallback } from 'react';
 import styles from './index.less';
 import fromPng from './images/form.png';
 import callDrag from './images/call_drag.png';
+import channelDropdown from './images/channel_dropdown.png';
+import channelEmailToolbar from './images/channel_email_toolbar.png';
+import channelLivechatToolbar from './images/channel_livechat_toolbar.png';
 import orderDetailsDrag from './images/order_details_drag.png';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import ChannelBar from './ChannelBar';
 
 export default function () {
     const [draging, setDraging] = useState<boolean>(false);
@@ -44,7 +48,6 @@ export default function () {
             document.body.style.cursor = '';
             return;
         }
-        console.log("lp:", event.clientY)
         //document.getSelection()?.removeAllRanges();
         setDragX(event.clientX);
         setDragY(event.clientY + document.documentElement.scrollTop);
@@ -66,6 +69,15 @@ export default function () {
             <div className={styles.workspace} />
             <img className={styles.from} src={fromPng} onMouseDown={handleMouseDown} onDragStart={noDarg} onDragOver={hanldeDragOver} />
             <img className={styles.callDarg} src={callDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} />
+            <div className={styles.time} style={{ top: '376px' }}>11:20AM</div>
+            <div className={styles.time} style={{ top: '500px' }}>11:28AM</div>
+            <div className={styles.infoMessage} />
+
+           <ChannelBar />
+
+            <div className={styles.toolbar} />
+            <div className={styles.customerToolbar} />
+            <div className={styles.customization} />
         </>
     );
 }

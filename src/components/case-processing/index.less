@@ -1,0 +1,138 @@
+.workspace {
+  width: 700px;
+  height: 870px;
+  position: absolute;
+  top: 10px;
+  left: 180px;
+  z-index: 1;
+  background-image: url(./images/workspace.png);
+  background-size: 100% auto;
+}
+
+.from {
+  width: 350px;
+  height: 200px;
+  position: absolute;
+  left: 235px;
+  top: 420px;
+  z-index: 2;
+}
+
+.callDarg {
+  width: 320px;
+  height: 50px;
+  margin-left: -20px;
+  margin-top: -20px;
+  position: absolute;
+  z-index: 100;
+}
+
+.toolbar {
+  width: 70px;
+  height: 270px;
+  position: absolute;
+  top: 10px;
+  left: 888px;
+  z-index: 1;
+  background-image: url(./images/toolbar.png);
+  background-size: 100% auto;
+}
+
+.customerToolbar {
+  width: 70px;
+  height: 216px;
+  position: absolute;
+  bottom: 72px;
+  left: 888px;
+  z-index: 1;
+  background-image: url(./images/customer_toolbar.png);
+  background-size: 100% auto;
+}
+
+.customization {
+  width: 645px;
+  height: 344px;
+  position: absolute;
+  bottom: 60px;
+  right: 47px;
+  z-index: 1;
+  background-image: url(./images/customization.png);
+  background-size: 100% auto;
+}
+
+.infoMessage {
+  width: 510px;
+  height: 38px;
+  position: absolute;
+  left: 205px;
+  top: 422px;
+  z-index: 2;
+  background-image: url(./images/info_message.png);
+  background-size: 100% auto;
+}
+
+.time {
+  width: 510px;
+  height: 38px;
+  position: absolute;
+  left: 489px;
+  top: 376px;
+  color: #888;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.channelBar {
+  width: 666px;
+  height: 27px;
+  position: absolute;
+  z-index: 3;
+  bottom: 202px;
+  left: 197px;
+
+  .clickArea {
+    position: absolute;
+    width: 50px;
+    height: 27px;
+    cursor: pointer;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.channelDropdown {
+  width: 36px;
+  height: 102px;
+  position: absolute;
+  left: 205px;
+  bottom: 100px;
+  z-index: 4;
+  cursor: pointer;
+  background-size: 100% auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 6;
+  }
+
+  .list {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 7;
+
+    .item {
+      height: 34px;
+    }
+
+    .item:hover {
+      background-color: red;
+      opacity: 0.3;
+    }
+  }
+}
