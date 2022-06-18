@@ -4,7 +4,7 @@ import NavigationBar from '../components/navigation-bar';
 import FilterBar from '../components/filter-bar';
 import InputBox from '../components/input-box';
 import MultiTab from '../components/multi-tab';
-import OnDrag from '../components/on-drag';
+import CaseProcessing from '../components/case-processing';
 
 export default function IndexPage() {
   return (
@@ -13,7 +13,7 @@ export default function IndexPage() {
       <FilterBar type='default' />
       <InputBox />
       <MultiTab index={2} />
-      <OnDrag />
+      <CaseProcessing />
       <Background />
     </div>
   );
