@@ -7,6 +7,7 @@ import MultiTab from '../components/multi-tab';
 import CaseProcessing from '../components/case-processing';
 import Login from '@/components/login';
 import { useState } from 'react';
+import Player from '@/components/player';
 
 export default function IndexPage() {
   const [loginShow, setLoginShow] = useState(false);
