@@ -9,7 +9,7 @@ import Login from '@/components/login';
 import { useState } from 'react';
 
 export default function IndexPage() {
-  const [loginShow, setLoginShow] = useState(true);
+  const [loginShow, setLoginShow] = useState(false);
   return (
     <div>
       {loginShow ? (
