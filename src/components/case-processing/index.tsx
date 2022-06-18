@@ -9,7 +9,8 @@ export default function () {
             <div className={styles.workspace} />
             <OrderPaid />
             <div className={styles.time} style={{ top: '376px' }}>11:20AM</div>
-            <div className={styles.time} style={{ top: '500px' }}>11:28AM</div>
+            <div className={styles.time} style={{ top: '480px' }}>11:28AM</div>
+            <div className={styles.typeSomething}>Type something...</div>
             {false && <div className={styles.infoMessage} />}
             <div className={styles.airpods} />
 
