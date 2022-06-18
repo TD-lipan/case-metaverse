@@ -9,12 +9,24 @@
             padding: 0 !important;
             scroll-behavior: unset;
         }
-        #root{
+
+        #root {
             position: relative;
             width: 1670px;
             height: 940px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        @keyframes automatic_typing_animation {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .automatic_typing {
+            border-right: 1px solid black;
+            animation: 1s automatic_typing_animation steps(1) infinite;
         }
     </style>
     <title>Case Metaverse</title>
