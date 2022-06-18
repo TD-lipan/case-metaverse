@@ -8,7 +8,7 @@ export default function () {
     const [imgSrc, setImgSrc] = useState<string>(channelLivechatToolbar);
     const [showChannelDropdown, setShowChannelDropdown] = useState<boolean>(false);
     const hanldeChangeChannel = () => {
-        setShowChannelDropdown(true);
+        setShowChannelDropdown(!showChannelDropdown);
     }
 
     const hanldeChange = (src: string) => {
