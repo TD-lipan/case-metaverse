@@ -45,7 +45,6 @@ export const useProfile = () => {
               }}
               className={styles.switchBtn}
             >
-              {' '}
               1
             </button>
             <button
@@ -54,7 +53,6 @@ export const useProfile = () => {
               }}
               className={styles.switchBtn}
             >
-              {' '}
               2
             </button>
             <button
@@ -63,7 +61,6 @@ export const useProfile = () => {
               }}
               className={styles.switchBtn}
             >
-              {' '}
               3
             </button>
             <button
@@ -72,13 +69,12 @@ export const useProfile = () => {
               }}
               className={styles.switchBtn}
             >
-              {' '}
               4
             </button>
           </div>
         </div>
         <motion.div
-          initial={{ visibility: 'hidden' }}
+          initial={false}
           animate={show ? 'open' : 'closed'}
           variants={variantsForMsg}
           style={{

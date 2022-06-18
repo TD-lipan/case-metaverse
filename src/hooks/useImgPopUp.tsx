@@ -82,7 +82,7 @@ export const useImgPopUp = () => {
               setBubbleImg(undefined);
             }}
           >
-            <img src={bubbleImg} alt="" />
+            <img src={bubbleImg} alt="" style={{ width: '148px' }} />
           </motion.div>
         )}
       </div>
