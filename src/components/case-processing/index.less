@@ -9,13 +9,24 @@
   background-size: 100% auto;
 }
 
-.from {
+.orderPaid {
   width: 350px;
-  height: 200px;
+  height: 178px;
   position: absolute;
-  left: 234px;
-  top: 500px;
+  left: 204px;
+  top: 514px;
   z-index: 2;
+}
+
+.orderPaidInput {
+  width: 268px;
+  height: 50px;
+  position: absolute;
+  left: 204px;
+  bottom: 117px;
+  z-index: 101;
+  background-image: url(./images/order_paid_input.png);
+  background-size: 100% auto;
 }
 
 .callDarg {
@@ -24,8 +35,18 @@
   margin-left: -20px;
   margin-top: -20px;
   position: absolute;
-  z-index: 100;
-  pointer-events:none;
+  z-index: 102;
+  pointer-events: none;
+}
+
+.orderDetailsDrag {
+  width: 320px;
+  height: 50px;
+  margin-left: -20px;
+  margin-top: -20px;
+  position: absolute;
+  z-index: 102;
+  pointer-events: none;
 }
 
 .targetArea {
@@ -91,21 +112,32 @@
   height: 51px;
   position: absolute;
   left: 205px;
-  top: 422px;
+  top: 412px;
   z-index: 2;
   background-image: url(./images/airpods.png);
   background-size: 100% auto;
 }
 
-.time {
-  width: 510px;
-  height: 38px;
+.text {
   position: absolute;
-  left: 489px;
-  top: 376px;
   color: #888;
   font-size: 14px;
   z-index: 2;
+}
+
+.time:extend(.text) {
+  width: 510px;
+  height: 38px;
+  left: 489px;
+  top: 376px;
+}
+
+.typeSomething:extend(.text) {
+  width: 150px;
+  height: 38px;
+  left: 204px;
+  bottom: 153px;
+  color: #bbb;
 }
 
 .channelBar {
