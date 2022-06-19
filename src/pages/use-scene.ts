@@ -7,10 +7,11 @@ export enum Scene {
     Login = 1,
     Main = 2,
     CaseProcessing = 3,
+    TwoDaysLater = 4
 }
 
-export default function () {
-    const [scene, setScene] = useState<Scene>(Scene.Login);
+export default function (defaultValue?: Scene) {
+    const [scene, setScene] = useState<Scene>(defaultValue || Scene.Login);
 
     const handleKeyPress = (e: any) => {
         const { key, keyCode } = e;
@@ -23,7 +24,7 @@ export default function () {
                 step = 1
             }
             const newValue = prev + step;
-            if (newValue > 3 || newValue < 1) return prev;
+            if (newValue > 4 || newValue < 1) return prev;
             return prev + step;
         })
     }
