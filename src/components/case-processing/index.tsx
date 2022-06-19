@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styles from './index.less';
 import ChannelBar from './ChannelBar';
 import ChartArea from './ChartArea';
@@ -22,42 +22,47 @@ export default function () {
     const [step, setStep] = useState<number>(0);
     const [words, setWords] = useState<string>("");
 
+    const workFlowStep = useMemo(() => {
+        if (step === 0) return 0;
+        if (step < 10) return 1;
+        if (step === 10) return 1.5;
+        if (step === 11) return 2;
+        if (step > 11) return 2.1;
+        return 0;
+    }, [step]);
     const hanldeClick = () => {
-        if (step === 0 || step === 2 || step === 6 || step === 8) {
+        if (Object.keys(wordsMap).includes(String(step))) {
             setStep(step + 1);
-            autoShow();
             setWords("");
         }
-
         if (step >= 12) {
             setShowEmail(true);
             setIsDraged(false);
         }
     }
 
-    const autoShow = async () => {
-        if (step === 0 || step === 2 || step === 6 || step === 8 || step >= 13) {
-            setWords(wordsMap[step]);
-        } else if (step === 10) {
+    const handleKeyPress = (e: any) => {
+        const { key, keyCode } = e;
+        if (keyCode !== 13) return;
 
+        if (Object.keys(wordsMap).includes(String(step))) {
+            if (!words) setWords(wordsMap[step]);
         } else {
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(null);
-                }, 1000);
-            })
             setStep(prev => prev + 1);
         }
     }
 
     useEffect(() => {
-        autoShow();
-    }, [step])
+        window.addEventListener("keydown", handleKeyPress, false);
+        return () => {
+            window.removeEventListener("keydown", handleKeyPress, false);
+        }
+    }, [handleKeyPress])
 
     return (
         <>
             <div className={styles.workspace} />
-            <WorkFlow step={0} />
+            <WorkFlow step={workFlowStep} />
             <ChartArea onStartDarg={onStartDarg} showEamil={showEmail} step={step} setStep={setStep} />
             {/* <img className={styles.callDarg} src={callDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} /> */}
             <img className={styles.orderDetailsDrag} src={orderDetailsDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} />

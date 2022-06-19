@@ -15,15 +15,16 @@ import ok from './images/work-flow/ok.png';
 
 export default function ({ step = 0 }: { step: number }) {
 
+
     return (
         <>
             <div className={styles.workFlow} >
                 <div className={styles.row1}>
                     <img src={step == 1 ? item1_1 : step < 1 ? item1_0 : ok} />
-                    <img src={step == 2 ? item2_1 : step < 1 ? item2_0 : ok} />
-                    <img src={step == 3 ? item3_1 : step < 1 ? item3_0 : ok} />
-                    <img src={step == 4 ? item4_1 : step < 1 ? item4_0 : ok} />
-                    <img src={step == 5 ? item5_1 : step < 1 ? item5_0 : ok} />
+                    <img src={step == 2 ? item2_1 : step < 2 ? item2_0 : ok} />
+                    <img src={step == 3 ? item3_1 : step < 3 ? item3_0 : ok} />
+                    <img src={step == 4 ? item4_1 : step < 4 ? item4_0 : ok} />
+                    <img src={step == 5 ? item5_1 : step < 5 ? item5_0 : ok} />
                 </div>
                 <div className={styles.row2}>
                     <span>Comunicating</span>
@@ -32,7 +33,10 @@ export default function ({ step = 0 }: { step: number }) {
                     <span>Delivering</span>
                     <span>Finished</span>
                 </div>
-                <div className={styles.line}></div>
+                <div className={styles.line}>
+                    <div className={styles.progress} style={{ width: ((step - 1) / 4) * 100 + '%' }}></div>
+                </div>
+
             </div>
         </>
     );
