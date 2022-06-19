@@ -20,8 +20,8 @@ import T05 from './images/live-chat-bubble/T05.png';
 import T06 from './images/live-chat-bubble/T06.png';
 import { useState } from 'react';
 
-export default function ({ onStartDarg, showEamil, step }: { onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void, showEamil: boolean, step: number }) {
-
+export default function ({ onStartDarg, showEamil, step, setStep }: { onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void, showEamil: boolean, step: number, setStep: React.Dispatch<React.SetStateAction<number>> }) {
+    const [wordsMerged, setWordsMerged] = useState<boolean>(false);
     const chartAreaRef = useRef<HTMLElement>(null);
     useEffect(() => {
         if (!chartAreaRef.current) return;
@@ -47,10 +47,10 @@ export default function ({ onStartDarg, showEamil, step }: { onStartDarg: (e: Re
     return (
         <>
             <div className={styles.chartArea} ref={chartAreaRef}>
-                {renderLiveChatBubble()}
+                {!wordsMerged && renderLiveChatBubble()}
                 {step >= 10 && <div className={styles.time} style={{ top: '6px' }}>11:20AM</div>}
-                {step >= 10 && <div className={styles.infoMessage} />}
-                {step >= 11 && <div className={styles.airpods} />}
+                {step >= 10 && !wordsMerged && <div className={styles.infoMessage}><div className={styles.infoMessageBtn} onClick={() => { setWordsMerged(true); setStep(step + 1) }}></div></div>}
+                {step >= 11 && wordsMerged && <div className={styles.airpods} />}
 
                 {step >= 12 && <div className={styles.time} style={{ top: '110px' }}>11:28AM</div>}
                 {step >= 12 && <OrderPaid onStartDarg={onStartDarg} />}

@@ -101,6 +101,12 @@
   background-size: 100% auto;
   margin-top: 5px;
   margin-bottom: 5px;
+  .infoMessageBtn{
+    cursor: pointer;
+    width: 80px;
+    height: 38px;
+    float: right;
+  }
 }
 
 .airpods {
@@ -247,6 +253,50 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
+}
 
-
+.workFlow{
+  width: 626px;
+  height: 70px;
+  z-index: 105;
+  top: 270px;
+  position: absolute;
+  left: 218px;
+  padding-left: 8px;
+  padding-right: 8px;
+  overflow-y: auto;
+  background-color: #CCCCCC38;
+  .row1{
+    height: 30px;
+    margin-top: 7px;
+    display: flex;
+    position: relative;
+    z-index: 20;
+    justify-content: space-between;
+    img{
+      width: 40px;
+      height: 40px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  .row2{
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-between;
+    span{
+      text-align: center;
+      width: 20%;
+      color: #eee;
+    }
+  }
+  .line{
+    position: absolute;
+    top: 27px;
+    height: 2px;
+    width: 500px;
+    background-color: #fff;
+    left: 60px;
+    z-index: 1;
+  }
 }
