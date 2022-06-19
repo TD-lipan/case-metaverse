@@ -10,18 +10,18 @@ import { useEffect, useState } from 'react';
 import useScene, { Scene } from './use-scene';
 import Player from '@/components/player';
 import MainUi from '@/components/main-ui';
-import BaseRole from '@/components/roles';
 import TwoDaysLater from '@/components/two-days-later';
+import RolesWidget from '@/components/roles';
 
 export default function IndexPage() {
-  const { scene, setScene } = useScene();
+  const { scene, setScene } = useScene(Scene.Main);
 
   return (
     <div>
       {scene === Scene.Login && <Login setScene={setScene} />}
 
       {scene === Scene.Main && <MainUi />}
-      {scene === Scene.Main && <BaseRole />}
+      {scene === Scene.Main && <RolesWidget />}
       {scene === Scene.CaseProcessing && <CaseProcessing />}
       {scene === Scene.TwoDaysLater && <TwoDaysLater />}
 

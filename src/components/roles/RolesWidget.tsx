@@ -1,8 +1,10 @@
 import { useRef, useLayoutEffect } from 'react';
 import * as PIXI from 'pixi.js';
-import * as TWEEN from '@tweenjs/tween.js';
 
-import styles from './baseRole.less';
+import BaseRole from './BaseRole';
+import CarlyYatesRole from './CarlyYatesRole';
+
+import styles from './RolesWidget.less';
 
 import carlyYates01 from '../../assets/images/roles/Carly Yates01.png';
 import carlyYates02 from '../../assets/images/roles/Carly Yates02.png';
@@ -26,54 +28,7 @@ import teresaJuarez03 from '../../assets/images/roles/Teresa Juarez03.png';
 import tomSive01 from '../../assets/images/roles/Tom Sive01.png';
 import tomSive02 from '../../assets/images/roles/Tom Sive02.png';
 
-function animate() {
-  requestAnimationFrame(animate);
-  TWEEN.update();
-}
-
-function addStaticRole(
-  app: PIXI.Application,
-  resourceName: string,
-  position: PIXI.IPointData,
-  scale?: PIXI.IPointData,
-) {
-  const sprite = new PIXI.Sprite(app.loader.resources[resourceName].texture);
-
-  sprite.x = position.x;
-  sprite.y = position.y;
-  scale && sprite.scale.set(scale.x, scale.y);
-
-  app.stage.addChild(sprite);
-  return sprite;
-}
-
-function addDynamicRole(
-  app: PIXI.Application,
-  resources: string[],
-  position: PIXI.IPointData,
-  speed?: number,
-  scale?: PIXI.IPointData,
-) {
-  const animatedSprite = new PIXI.AnimatedSprite(
-    resources.reduce((textures: PIXI.Texture[], res: string) => {
-      const texture = app.loader.resources[res].texture;
-
-      texture && textures.push(texture);
-
-      return textures;
-    }, []),
-  );
-
-  animatedSprite.x = position.x;
-  animatedSprite.y = position.y;
-  speed && (animatedSprite.animationSpeed = 0.075);
-  scale && animatedSprite.scale.set(scale.x, scale.y);
-
-  app.stage.addChild(animatedSprite);
-  return animatedSprite;
-}
-
-const BaseRole: React.FC = () => {
+const RolesWidget: React.FC = () => {
   const mainPanel = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -90,6 +45,7 @@ const BaseRole: React.FC = () => {
       backgroundAlpha: 0,
       forceCanvas: false,
     });
+    app.stage.sortableChildren = true;
 
     !_mainPanel.hasChildNodes() && _mainPanel.append(app.view);
 
@@ -116,71 +72,64 @@ const BaseRole: React.FC = () => {
       .add('tomSive01', tomSive01)
       .add('tomSive02', tomSive02)
       .load(function () {
-        const carlyYates = addDynamicRole(
+        const carlyYates = new CarlyYatesRole(
           app,
           ['carlyYates01', 'carlyYates03'],
           { x: 389, y: 501 },
-          0.75,
         );
-        addStaticRole(app, 'pelinVenz', { x: 890, y: 400 }, { x: 0.5, y: 0.5 });
-        addStaticRole(app, 'w2', { x: 1644, y: 467 });
-        addDynamicRole(
+
+        carlyYates.bind<MouseEvent>('click', () => {
+          carlyYates.move();
+        });
+
+        const pelinVenz = new BaseRole(app, 'pelinVenz', { x: 890, y: 400 });
+        pelinVenz.setSacle({ x: 0.5, y: 0.5 });
+
+        const w2 = new BaseRole(app, 'w2', { x: 1644, y: 467 });
+
+        const damonMenson = new BaseRole<PIXI.Sprite>(
           app,
           ['damonMenson01', 'damonMenson02'],
           { x: 430, y: 166 },
-          0.75,
-        ).play();
-        addDynamicRole(
-          app,
-          ['emmyElsner01', 'emmyElsner02'],
-          { x: 540, y: 40 },
-          0.75,
-        ).play();
-        addDynamicRole(
-          app,
-          ['jadeKinzel01', 'jadeKinzel02'],
-          { x: 959, y: 632 },
-          0.75,
-        ).play();
-        addDynamicRole(
+        );
+
+        const emmyElsner = new BaseRole(app, ['emmyElsner01', 'emmyElsner02'], {
+          x: 540,
+          y: 40,
+        });
+
+        const jadeKinzel = new BaseRole(app, ['jadeKinzel01', 'jadeKinzel02'], {
+          x: 959,
+          y: 632,
+        });
+
+        const jamesAnyeni = new BaseRole(
           app,
           ['jamesAnyeni01', 'jamesAnyeni02'],
           { x: 1245, y: 189 },
-          0.75,
-        ).play();
-        addDynamicRole(
+        );
+
+        const surinPotter = new BaseRole(
           app,
           ['surinPotter01', 'surinPotter02'],
           { x: 1178, y: 438 },
-          0.75,
-        ).play();
-        addDynamicRole(
+        );
+
+        const teresaJuarez = new BaseRole(
           app,
           ['teresaJuarez01', 'teresaJuarez03'],
           { x: 646, y: 506 },
-          0.75,
-        ).play();
-        addDynamicRole(
-          app,
-          ['tomSive01', 'tomSive02'],
-          { x: 1546, y: 384 },
-          0.75,
-        ).play();
+        );
 
-        new TWEEN.Tween(carlyYates)
-          .to({ x: 350, y: 300 }, 1000)
-          .to({ x: 450, y: 350 }, 1000)
-          .to({ x: 520, y: 370 }, 1000)
-          .to({ x: 600, y: 500 }, 1000)
-          .easing(TWEEN.Easing.Cubic.Out)
-          .onStart(() => carlyYates.play())
-          .onComplete(() => setTimeout(() => carlyYates.stop(), 1000))
-          .start();
-        animate();
+        const tomSive = new BaseRole(app, ['tomSive01', 'tomSive02'], {
+          x: 1546,
+          y: 384,
+        });
+        // app.stage.addChild(animatedSprite);
       });
   }, []);
 
-  return <div className={styles.mainPanel} ref={mainPanel}></div>;
+  return <div className={styles.rolesWidget} ref={mainPanel}></div>;
 };
 
-export default BaseRole;
+export default RolesWidget;
