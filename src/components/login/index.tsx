@@ -13,7 +13,7 @@ export default function Login({
       <button
         className={styles.loginBtn}
         onClick={() => {
-          setScene(prev => prev + 1);
+          setScene((prev) => prev + 1);
         }}
       >
         login
