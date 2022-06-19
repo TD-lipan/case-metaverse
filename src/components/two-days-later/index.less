@@ -1,10 +1,23 @@
-.navigationBar{
-  width: 86px;
-  height: 940px;
+.targetArea {
+  width: 331px;
+  height: 100px;
+  z-index: 10;
+  bottom: 396px;
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  background-image: url(./images/navigation_bar.png);
-  background-size: 100% auto;
+  left: 668px;
+}
+
+.targetAreaHover {
+  border: dashed 1px #8635F2;
+  background-color: #8635F238;
+  cursor: pointer;
+}
+.callDrag {
+  width: 320px;
+  height: 50px;
+  margin-left: -20px;
+  margin-top: -20px;
+  position: absolute;
+  z-index: 102;
+  pointer-events: none;
 }
