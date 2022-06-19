@@ -1,18 +1,19 @@
 import React from 'react';
 import styles from './index.less';
 import loginImg from './images/login.png';
+import { Scene } from '../../pages/use-scene';
 
 export default function Login({
-  setState,
+  setScene,
 }: {
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
+  setScene: React.Dispatch<React.SetStateAction<Scene>>;
 }) {
   return (
     <div className={styles.background}>
       <button
         className={styles.loginBtn}
         onClick={() => {
-          setState(false);
+          setScene(prev => prev + 1);
         }}
       >
         login

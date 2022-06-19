@@ -6,25 +6,29 @@ import InputBox from '../components/input-box';
 import MultiTab from '../components/multi-tab';
 import CaseProcessing from '../components/case-processing';
 import Login from '@/components/login';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Player from '@/components/player';
+import useScene, { Scene } from './use-scene';
+import MainUi from '@/components/main-ui';
+
 
 export default function IndexPage() {
-  const [loginShow, setLoginShow] = useState(false);
+  const { scene, setScene } = useScene();
+
   return (
     <div>
-      {loginShow ? (
-        <Login setState={setLoginShow} />
-      ) : (
+
+      {scene === Scene.Login && <Login setScene={setScene} />}
+
+      {scene === Scene.Main && <MainUi />}
+      {scene === Scene.CaseProcessing && <CaseProcessing />}
+
+      {scene !== Scene.Login &&
         <>
           <NavigationBar />
-          <FilterBar type="default" />
-          <InputBox />
           <MultiTab index={2} />
-          <CaseProcessing />
-        </>
-      )}
+        </>}
       <Background />
-    </div>
+    </div >
   );
 }
