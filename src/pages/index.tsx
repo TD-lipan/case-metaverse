@@ -10,10 +10,10 @@ import { useEffect, useState } from 'react';
 import useScene, { Scene } from './use-scene';
 import Player from '@/components/player';
 import MainUi from '@/components/main-ui';
-import BaseRole from '@/components/roles';
+import RolesWidget from '@/components/roles';
 
 export default function IndexPage() {
-  const { scene, setScene } = useScene();
+  const { scene, setScene } = useScene(Scene.Main);
 
   return (
     <div>
@@ -29,7 +29,7 @@ export default function IndexPage() {
           <CaseProcessing />
         </>
       )}
-      {scene !== Scene.Login && <BaseRole />}
+      {scene !== Scene.Login && <RolesWidget />}
       <Background />
     </div>
   );

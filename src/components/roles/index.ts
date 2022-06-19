@@ -1,3 +1,3 @@
-import BaseRole from './baseRole';
+import RolesWidget from './RolesWidget';
 
-export default BaseRole;
+export default RolesWidget;
