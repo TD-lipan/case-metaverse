@@ -7,12 +7,13 @@ import useDrag from './use-drag';
 import orderDetailsDrag from './images/order_details_drag.png';
 import { useEffect } from 'react';
 import AutomaticTyping from './AutomaticTyping';
+import WorkFlow from './WorkFlow';
 
 const wordsMap: { [index: number]: string } = {
     0: "Could you see the VR model I sent you?",
     2: "You could choose any font, color, and content you like and engrave it on the product. I will recommend you choose the center of the box. What do you want to write for your niece?",
     6: "I could try to add a cute sticker on it. Do you like this?",
-    8: "No problem"
+    8: "No problem."
 };
 
 export default function () {
@@ -27,6 +28,7 @@ export default function () {
             autoShow();
             setWords("");
         }
+
         if (step >= 12) {
             setShowEmail(true);
             setIsDraged(false);
@@ -36,6 +38,8 @@ export default function () {
     const autoShow = async () => {
         if (step === 0 || step === 2 || step === 6 || step === 8 || step >= 13) {
             setWords(wordsMap[step]);
+        } else if (step === 10) {
+
         } else {
             await new Promise((resolve) => {
                 setTimeout(() => {
@@ -53,7 +57,8 @@ export default function () {
     return (
         <>
             <div className={styles.workspace} />
-            <ChartArea onStartDarg={onStartDarg} showEamil={showEmail} step={step} />
+            <WorkFlow step={0} />
+            <ChartArea onStartDarg={onStartDarg} showEamil={showEmail} step={step} setStep={setStep} />
             {/* <img className={styles.callDarg} src={callDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} /> */}
             <img className={styles.orderDetailsDrag} src={orderDetailsDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} />
             <div className={`${styles.targetArea} ${targetAreaHover}`} onMouseOver={onEndMouseOver} onMouseLeave={onEndMouseLeave}></div>
