@@ -7,28 +7,30 @@ import MultiTab from '../components/multi-tab';
 import CaseProcessing from '../components/case-processing';
 import Login from '@/components/login';
 import { useEffect, useState } from 'react';
-import Player from '@/components/player';
 import useScene, { Scene } from './use-scene';
+import Player from '@/components/player';
 import MainUi from '@/components/main-ui';
-
+import BaseRole from '@/components/roles';
 
 export default function IndexPage() {
   const { scene, setScene } = useScene();
 
   return (
     <div>
-
       {scene === Scene.Login && <Login setScene={setScene} />}
 
       {scene === Scene.Main && <MainUi />}
       {scene === Scene.CaseProcessing && <CaseProcessing />}
 
-      {scene !== Scene.Login &&
+      {scene !== Scene.Login && (
         <>
           <NavigationBar />
           <MultiTab index={2} />
-        </>}
+          <CaseProcessing />
+        </>
+      )}
+      {scene !== Scene.Login && <BaseRole />}
       <Background />
-    </div >
+    </div>
   );
 }
