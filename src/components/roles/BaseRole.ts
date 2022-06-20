@@ -1,14 +1,18 @@
 import * as PIXI from 'pixi.js';
 import { addDynamicRole, addStaticRole } from './roleUtils';
+import _divide from 'lodash/divide';
+import _add from 'lodash/add';
 
 export default class BaseRole<T extends PIXI.Sprite> {
   private name: string;
   private instance: T;
+  private app: PIXI.Application;
 
   constructor(
     app: PIXI.Application,
     resources: string[] | string,
     position: PIXI.IPointData,
+    needToStage = true,
   ) {
     if (resources instanceof Array) {
       this.name = resources[0].replace(/\d{2,}$/, '');
@@ -18,7 +22,12 @@ export default class BaseRole<T extends PIXI.Sprite> {
       this.instance = addStaticRole(app, resources, position);
     }
 
-    app.stage.addChild(this.instance);
+    this.app = app;
+    needToStage && app.stage.addChild(this.instance);
+  }
+
+  public getApp() {
+    return this.app;
   }
 
   public getInstance() {
@@ -40,5 +49,11 @@ export default class BaseRole<T extends PIXI.Sprite> {
   public setSpeed(speed: number) {
     if (this.instance instanceof PIXI.AnimatedSprite)
       this.instance.animationSpeed = speed;
+  }
+
+  public talk() {
+    console.log(
+      _add(this.instance.position.x, _divide(this.instance.width, 2)),
+    );
   }
 }

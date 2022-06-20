@@ -27,6 +27,8 @@ import teresaJuarez02 from '../../assets/images/roles/Teresa Juarez02.png';
 import teresaJuarez03 from '../../assets/images/roles/Teresa Juarez03.png';
 import tomSive01 from '../../assets/images/roles/Tom Sive01.png';
 import tomSive02 from '../../assets/images/roles/Tom Sive02.png';
+import carlyYatesToolbar from '../../assets/images/roles/Customer toolbar in homepage@2x.png';
+import TeresaJuarezRole from './TeresaJuarezRole';
 
 const RolesWidget: React.FC = () => {
   const mainPanel = useRef<HTMLDivElement>(null);
@@ -71,6 +73,7 @@ const RolesWidget: React.FC = () => {
       .add('teresaJuarez03', teresaJuarez03)
       .add('tomSive01', tomSive01)
       .add('tomSive02', tomSive02)
+      .add('carlyYatesToolbar', carlyYatesToolbar)
       .load(function () {
         const carlyYates = new CarlyYatesRole(
           app,
@@ -78,9 +81,19 @@ const RolesWidget: React.FC = () => {
           { x: 389, y: 501 },
         );
 
-        carlyYates.bind<MouseEvent>('click', () => {
-          carlyYates.move();
+        carlyYates.bindForGroup<MouseEvent>('mouseover', () => {
+          carlyYates.toggleMenu(true);
         });
+
+        carlyYates.bindForGroup<MouseEvent>('mouseout', (event) => {
+          carlyYates.toggleMenu(false);
+        });
+
+        carlyYates.bind<MouseEvent>('click', () => {
+          carlyYates.talk();
+        });
+
+        carlyYates.move();
 
         const pelinVenz = new BaseRole(app, 'pelinVenz', { x: 890, y: 400 });
         pelinVenz.setSacle({ x: 0.5, y: 0.5 });
@@ -115,17 +128,22 @@ const RolesWidget: React.FC = () => {
           { x: 1178, y: 438 },
         );
 
-        const teresaJuarez = new BaseRole(
+        const teresaJuarez = new TeresaJuarezRole(
           app,
           ['teresaJuarez01', 'teresaJuarez03'],
           { x: 646, y: 506 },
         );
 
+        teresaJuarez.move();
+
+        teresaJuarez.bind<MouseEvent>('click', () => {
+          teresaJuarez.talk();
+        });
+
         const tomSive = new BaseRole(app, ['tomSive01', 'tomSive02'], {
           x: 1546,
           y: 384,
         });
-        // app.stage.addChild(animatedSprite);
       });
   }, []);
 

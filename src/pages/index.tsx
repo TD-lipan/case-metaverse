@@ -11,7 +11,6 @@ import useScene, { Scene } from './use-scene';
 import Player from '@/components/player';
 import MainUi from '@/components/main-ui';
 import TwoDaysLater from '@/components/two-days-later';
-import RolesWidget from '@/components/roles';
 
 export default function IndexPage() {
   const { scene, setScene } = useScene(Scene.Main);
@@ -21,7 +20,6 @@ export default function IndexPage() {
       {scene === Scene.Login && <Login setScene={setScene} />}
 
       {scene === Scene.Main && <MainUi />}
-      {scene === Scene.Main && <RolesWidget />}
       {scene === Scene.CaseProcessing && <CaseProcessing />}
       {scene === Scene.TwoDaysLater && <TwoDaysLater />}
 
