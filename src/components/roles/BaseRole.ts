@@ -35,13 +35,21 @@ export default class BaseRole<T extends PIXI.Sprite> {
     return this.instance;
   }
 
-  public showMessage(src: string, second: number) {
-    const messageBox = new Message(src, this.instance.x, this.instance.y);
+  public showMessage(
+    src: string,
+    second: number,
+    width: number,
+    height: number,
+  ) {
+    const afterX = this.instance.x + 53 - width / 2;
+    const afterY = this.instance.y - height;
+
+    const messageBox = new Message(src);
     setTimeout(() => {
-      messageBox.show(this.instance.x, this.instance.y);
+      messageBox.show(afterX, afterY);
       setTimeout(() => {
         messageBox.hide();
-      }, 1000);
+      }, 2000);
     }, second * 1000);
   }
 

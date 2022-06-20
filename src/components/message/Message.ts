@@ -6,7 +6,7 @@ export default class Message {
   private rootElem: HTMLDivElement | null = null;
   private containerElem: HTMLDivElement | null = null;
 
-  constructor(src: string, x: number, y: number) {
+  constructor(src: string) {
     setTimeout(() => {
       this.rootElem = document.querySelector('.popup-container-wrapper');
       this.containerElem = document.querySelector('.popup-container');
@@ -41,8 +41,8 @@ export default class Message {
           this.imgElem.className = this.imgId;
           this.imgElem.src = src;
           this.imgElem.style.position = 'absolute';
-          this.imgElem.style.left = x + 'px';
-          this.imgElem.style.top = y + 'px';
+          // this.imgElem.style.left = x + 'px';
+          // this.imgElem.style.top = y + 'px';
           this.imgElem.style.display = 'none';
           this.containerElem.appendChild(this.imgElem);
         }
@@ -54,7 +54,6 @@ export default class Message {
     if (this.imgElem) {
       this.imgElem.style.left = x + 'px';
       this.imgElem.style.top = y + 'px';
-      this.imgElem.style.transform = 'translate(-50%,-110%)';
       this.imgElem.style.display = 'block';
       this.imgElem.className = 'animate__bounceIn';
     }

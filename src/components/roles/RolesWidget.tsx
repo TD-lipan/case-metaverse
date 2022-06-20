@@ -31,6 +31,11 @@ import tomSive02 from '../../assets/images/roles/Tom Sive02.png';
 import carlyYatesToolbar from '../../assets/images/roles/Customer toolbar in homepage@2x.png';
 import TeresaJuarezRole from './TeresaJuarezRole';
 import damonMensonMsg from '../../assets/random1.png';
+import jamesAnyeniMsg from '../../assets/random2.png';
+import surinPotterMsg from '../../assets/random3.png';
+import jamesAnyeniMsg2 from '../../assets/random4.png';
+import jamesAnyeniMsg3 from '../../assets/random5.png';
+import jamesAnyeniMsg4 from '../../assets/random6.png';
 
 const RolesWidget: React.FC = () => {
   const mainPanel = useRef<HTMLDivElement>(null);
@@ -106,7 +111,8 @@ const RolesWidget: React.FC = () => {
           app,
           ['damonMenson01', 'damonMenson02'],
           { x: 430, y: 166 },
-        ).showMessage(damonMensonMsg, 2);
+        );
+        damonMenson.showMessage(damonMensonMsg, 2, 178, 70);
 
         const emmyElsner = new BaseRole(app, ['emmyElsner01', 'emmyElsner02'], {
           x: 540,
@@ -117,18 +123,23 @@ const RolesWidget: React.FC = () => {
           x: 959,
           y: 632,
         });
+        jadeKinzel.showMessage(jamesAnyeniMsg3, 9, 394, 84);
 
         const jamesAnyeni = new BaseRole(
           app,
           ['jamesAnyeni01', 'jamesAnyeni02'],
           { x: 1245, y: 189 },
         );
+        jamesAnyeni.showMessage(jamesAnyeniMsg, 12, 394, 84);
+        jamesAnyeni.showMessage(jamesAnyeniMsg2, 7, 394, 84);
 
         const surinPotter = new BaseRole(
           app,
           ['surinPotter01', 'surinPotter02'],
           { x: 1178, y: 438 },
         );
+
+        surinPotter.showMessage(surinPotterMsg, 3, 394, 70);
 
         const teresaJuarez = new TeresaJuarezRole(
           app,
@@ -146,6 +157,7 @@ const RolesWidget: React.FC = () => {
           x: 1546,
           y: 384,
         });
+        tomSive.showMessage(jamesAnyeniMsg4, 9, 394, 84);
         // app.stage.addChild(animatedSprite);
       });
   }, []);
