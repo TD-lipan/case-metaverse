@@ -4,7 +4,7 @@ import call_on_going from './images/call_on_going.png';
 import call_wrap_up from './images/call_wrap_up.png';
 
 
-export default function ({ left = 182, top = 244, visible = true, onStartDarg }: { left: number, top: number, visible: boolean, onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void }) {
+export default function ({ left = 182, top = 244, visible = true, onStartDarg }: { left?: number, top?: number, visible?: boolean, onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void }) {
     const [src, setSrc] = useState<string>(call_on_going);
 
     return (

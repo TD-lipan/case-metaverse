@@ -12,7 +12,7 @@ export default function () {
 
     return (
         <>
-            <CustomerProfile isDraged={isDraged} />
+            <CustomerProfile isDraged={isDraged} isEmpty={false} />
             <Call onStartDarg={onStartDarg} />
 
             <img className={styles.callDrag} src={callDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} />

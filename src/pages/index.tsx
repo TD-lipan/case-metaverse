@@ -19,7 +19,7 @@ export default function IndexPage() {
     <div>
       {scene === Scene.Login && <Login setScene={setScene} />}
 
-      {scene === Scene.Main && <MainUi />}
+      {scene === Scene.Main && <MainUi setScene={setScene} />}
       {scene === Scene.CaseProcessing && <CaseProcessing />}
       {scene === Scene.TwoDaysLater && <TwoDaysLater />}
 
