@@ -48,13 +48,17 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
 
   public move() {
     const sprite = this.getInstance();
+    const group = this.getGroupInstance();
 
-    new TWEEN.Tween(this.getGroupInstance())
-      .to({ x: 580, y: 501 }, 2000)
-      .easing(TWEEN.Easing.Cubic.Out)
-      .onStart(() => sprite.play())
-      .onComplete(() => setTimeout(() => sprite.stop(), 100))
-      .start();
+    const p1 = new TWEEN.Tween(group)
+      .to({ x: 242, y: 380 }, 1000)
+      .onStart(() => sprite.play());
+
+    const p2 = new TWEEN.Tween(group)
+      .to({ x: 530, y: 480 }, 1300)
+      .onComplete(() => setTimeout(() => sprite.stop(), 300));
+
+    p1.chain(p2.delay(300)).start();
     animate();
   }
 

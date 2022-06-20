@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
-import { addDynamicRole, addStaticRole } from './roleUtils';
+import { addDynamicRole, addStaticRole, animate } from './roleUtils';
 import _divide from 'lodash/divide';
+import * as TWEEN from '@tweenjs/tween.js';
 import _add from 'lodash/add';
 import Message from '@/components/message/Message';
 
@@ -25,6 +26,24 @@ export default class BaseRole<T extends PIXI.Sprite> {
 
     this.app = app;
     needToStage && app.stage.addChild(this.instance);
+    this.randomPlay();
+  }
+
+  public randomPlay() {
+    const random = Math.ceil(Math.random() * 5);
+
+    setTimeout(() => {
+      if (this.instance instanceof PIXI.AnimatedSprite) {
+        this.instance.play();
+      }
+
+      setTimeout(() => {
+        if (this.instance instanceof PIXI.AnimatedSprite) {
+          this.instance.stop();
+          this.randomPlay();
+        }
+      }, 2000);
+    }, random * 1000);
   }
 
   public getApp() {
@@ -68,6 +87,39 @@ export default class BaseRole<T extends PIXI.Sprite> {
   public setSpeed(speed: number) {
     if (this.instance instanceof PIXI.AnimatedSprite)
       this.instance.animationSpeed = speed;
+  }
+
+  public move() {
+    const instance = this.instance;
+
+    if (instance instanceof PIXI.AnimatedSprite) {
+      const { position, width } = instance;
+      const start = position.x + width;
+      const end = position.x + 500;
+
+      const go = new TWEEN.Tween(instance)
+        .to({ x: end }, 3000)
+        .easing(TWEEN.Easing.Elastic.InOut)
+        .onComplete(() => {
+          this.instance.width = -width;
+          this.instance.position.x += width;
+        });
+
+      const back = new TWEEN.Tween(instance)
+        .to({ x: start }, 3000)
+        .easing(TWEEN.Easing.Elastic.InOut)
+        .onComplete(() => {
+          this.instance.width = -width;
+          this.instance.position.x -= width;
+        });
+
+      go.chain(back.delay(3000));
+      back.chain(go.delay(3000));
+
+      go.start();
+
+      animate();
+    }
   }
 
   public talk() {

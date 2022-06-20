@@ -85,7 +85,13 @@ const RolesWidget: React.FC = () => {
         const carlyYates = new CarlyYatesRole(
           app,
           ['carlyYates01', 'carlyYates03'],
-          { x: 389, y: 501 },
+          { x: 260, y: 190 },
+        );
+
+        const teresaJuarez = new TeresaJuarezRole(
+          app,
+          ['teresaJuarez01', 'teresaJuarez03'],
+          { x: 886, y: 540 },
         );
 
         carlyYates.bindForGroup<MouseEvent>('mouseover', () => {
@@ -97,10 +103,11 @@ const RolesWidget: React.FC = () => {
         });
 
         carlyYates.bind<MouseEvent>('click', () => {
-          carlyYates.talk();
+          carlyYates.move();
+          setTimeout(() => {
+            teresaJuarez.move();
+          }, 1300);
         });
-
-        carlyYates.move();
 
         const pelinVenz = new BaseRole(app, 'pelinVenz', { x: 890, y: 400 });
         pelinVenz.setSacle({ x: 0.5, y: 0.5 });
@@ -118,6 +125,8 @@ const RolesWidget: React.FC = () => {
           x: 540,
           y: 40,
         });
+
+        emmyElsner.move();
 
         const jadeKinzel = new BaseRole(app, ['jadeKinzel01', 'jadeKinzel02'], {
           x: 959,
@@ -141,24 +150,11 @@ const RolesWidget: React.FC = () => {
 
         surinPotter.showMessage(surinPotterMsg, 3, 394, 70);
 
-        const teresaJuarez = new TeresaJuarezRole(
-          app,
-          ['teresaJuarez01', 'teresaJuarez03'],
-          { x: 646, y: 506 },
-        );
-
-        teresaJuarez.move();
-
-        teresaJuarez.bind<MouseEvent>('click', () => {
-          teresaJuarez.talk();
-        });
-
         const tomSive = new BaseRole(app, ['tomSive01', 'tomSive02'], {
           x: 1546,
           y: 384,
         });
         tomSive.showMessage(jamesAnyeniMsg4, 9, 394, 84);
-        // app.stage.addChild(animatedSprite);
       });
   }, []);
 
