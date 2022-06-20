@@ -5,6 +5,7 @@ import BaseRole from './BaseRole';
 import CarlyYatesRole from './CarlyYatesRole';
 
 import styles from './RolesWidget.less';
+import 'animate.css';
 
 import carlyYates01 from '../../assets/images/roles/Carly Yates01.png';
 import carlyYates02 from '../../assets/images/roles/Carly Yates02.png';
@@ -29,6 +30,7 @@ import tomSive01 from '../../assets/images/roles/Tom Sive01.png';
 import tomSive02 from '../../assets/images/roles/Tom Sive02.png';
 import carlyYatesToolbar from '../../assets/images/roles/Customer toolbar in homepage@2x.png';
 import TeresaJuarezRole from './TeresaJuarezRole';
+import damonMensonMsg from '../../assets/random1.png';
 
 const RolesWidget: React.FC = () => {
   const mainPanel = useRef<HTMLDivElement>(null);
@@ -104,7 +106,7 @@ const RolesWidget: React.FC = () => {
           app,
           ['damonMenson01', 'damonMenson02'],
           { x: 430, y: 166 },
-        );
+        ).showMessage(damonMensonMsg, 2);
 
         const emmyElsner = new BaseRole(app, ['emmyElsner01', 'emmyElsner02'], {
           x: 540,
@@ -144,6 +146,7 @@ const RolesWidget: React.FC = () => {
           x: 1546,
           y: 384,
         });
+        // app.stage.addChild(animatedSprite);
       });
   }, []);
 
