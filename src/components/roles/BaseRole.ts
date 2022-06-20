@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { addDynamicRole, addStaticRole } from './roleUtils';
 import _divide from 'lodash/divide';
 import _add from 'lodash/add';
+import Message from '@/components/message/Message';
 
 export default class BaseRole<T extends PIXI.Sprite> {
   private name: string;
@@ -32,6 +33,24 @@ export default class BaseRole<T extends PIXI.Sprite> {
 
   public getInstance() {
     return this.instance;
+  }
+
+  public showMessage(
+    src: string,
+    second: number,
+    width: number,
+    height: number,
+  ) {
+    const afterX = this.instance.x + 53 - width / 2;
+    const afterY = this.instance.y - height;
+
+    const messageBox = new Message(src);
+    setTimeout(() => {
+      messageBox.show(afterX, afterY);
+      setTimeout(() => {
+        messageBox.hide();
+      }, 2000);
+    }, second * 1000);
   }
 
   public getName() {
