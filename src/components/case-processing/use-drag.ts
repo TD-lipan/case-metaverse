@@ -3,6 +3,8 @@ import styles from './index.less';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+const root = document.getElementById("root");
+
 export default function () {
     const [draging, setDraging] = useState<boolean>(false);
     const [isDraged, setIsDraged] = useState<boolean>(false);
@@ -17,7 +19,7 @@ export default function () {
         document.body.addEventListener('mousemove', handleMouseMove, false);
         document.body.addEventListener('mouseup', handleMouseUp, false);
         document.body.style.cursor = 'grab';
-        setDragX(e.clientX);
+        setDragX(e.clientX - (root?.offsetLeft || 0));
         setDragY(e.clientY + document.documentElement.scrollTop);
 
         setDraging(true);
@@ -39,7 +41,7 @@ export default function () {
             return;
         }
         //document.getSelection()?.removeAllRanges();
-        setDragX(event.clientX);
+        setDragX(event.clientX - (root?.offsetLeft || 0));
         setDragY(event.clientY + document.documentElement.scrollTop);
     };
 
