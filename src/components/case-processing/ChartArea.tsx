@@ -35,8 +35,8 @@ export default function ({ onStartDarg, step }: { onStartDarg: (e: React.MouseEv
                 {step >= 2 && <div className={styles.liveChatBubble} ><img src={C04} /></div>}
                 {step >= 3 && <div className={styles.liveChatBubble} style={{ height: "90px" }}><img src={T04} style={{ float: 'right' }} /></div>}
                 {step >= 4 && <div className={styles.liveChatBubble} ><img src={C05} /></div>}
-                {step >= 5 && <div className={styles.liveChatBubble} ><img src={C06} /></div>}
-                {step >= 6 && <div className={styles.liveChatBubble} ><img src={C07} /></div>}
+                {step >= 5 && <div className={styles.liveChatBubble} style={{ height: "70px" }} ><img src={C06} /></div>}
+                {step >= 6 && <div className={styles.liveChatBubble} style={{ height: "70px" }}><img src={C07} /></div>}
                 {step >= 7 && <div className={styles.liveChatBubble} ><img src={T05} style={{ float: 'right' }} /></div>}
                 {step >= 8 && <div className={styles.liveChatBubble} ><img src={C08} /></div>}
                 {step >= 9 && <div className={styles.liveChatBubble} ><img src={T06} style={{ float: 'right' }} /></div>}
