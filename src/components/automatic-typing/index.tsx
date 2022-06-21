@@ -31,6 +31,7 @@ export default function ({ width, height, top, left, sendWidth, sendHeight, send
     const automaticTypingRef = useRef<HTMLElement>(null);
     const [actionIndex, setActionIndex] = useState<number>(0);
     const [word, setWord] = useState<string>('');
+    const timerRef = useRef<any>(null);
 
     const action = useMemo(() => actions[actionIndex], [actions, actionIndex]);
 
@@ -67,17 +68,18 @@ export default function ({ width, height, top, left, sendWidth, sendHeight, send
     const automaticTyping = (str: string) => {
 
         let tempText = ''
-        let i = 0
-        let timer = setInterval(() => {
+        let i = 0;
+        if (timerRef.current) clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
             if (!automaticTypingRef.current) return;
             if (tempText.length < str.length) {
                 tempText += str[i++];
                 automaticTypingRef.current.innerHTML = tempText
             } else {
-                clearInterval(timer)
+                if (timerRef.current) clearInterval(timerRef.current);
                 automaticTypingRef.current.innerHTML = tempText
             }
-        }, 20)
+        }, 20);
     }
 
     useEffect(() => {
@@ -91,9 +93,10 @@ export default function ({ width, height, top, left, sendWidth, sendHeight, send
 
     return (
         <>
-            {word && <div className={styles.automaticTyping} style={{ width: width, height: height, top: top, left: left }}>
+            {word && <div className={styles.automaticTyping} style={{ width: width, height: height, top: top, left: left, pointerEvents: 'none' }}>
                 <span className='automatic_typing' ref={automaticTypingRef}></span>
             </div>}
+            {!word && <span style={{ width: width, height: height, top: top, left: left, pointerEvents: 'none' }} className={styles.typeSomething}>Type something...</span>}
             <div className={styles.sendButton} style={{ width: sendWidth, height: sendHeight, top: sendTop, left: sendLeft }} onClick={hanldeSend}></div>
         </>
     );
