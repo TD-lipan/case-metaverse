@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import styles from './index.less';
 import ChannelBar from './ChannelBar';
 import ChartArea from './ChartArea';
-import useDrag from './use-drag';
+import useDrag from "@/hooks/use-drag";
 
 import orderDetailsDrag from './images/order_details_drag.png';
 import AutomaticTyping, { Action } from '../automatic-typing';

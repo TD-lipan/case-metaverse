@@ -3,7 +3,7 @@ import FilterBar from '../filter-bar';
 import CustomerProfile from '../customer-profile';
 import callDrag from './images/call_drag.png'
 import Call from '../call';
-import useDrag from './use-drag';
+import useDrag from '@/hooks/use-drag';
 import styles from './index.less'
 
 
