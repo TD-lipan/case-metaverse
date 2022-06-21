@@ -8,6 +8,8 @@ import orderDetailsDrag from './images/order_details_drag.png';
 import { useEffect } from 'react';
 import AutomaticTyping from './AutomaticTyping';
 import WorkFlow from './WorkFlow';
+import CustomerizationGif from './CustomerizationGif';
+import Customerization from './Customerization';
 
 const wordsMap: { [index: number]: string } = {
     0: "Could you see the VR model I sent you?",
@@ -75,8 +77,10 @@ export default function () {
             <div className={styles.typeSomething}>Type something...</div>
             <div className={styles.toolbar} />
             <div className={styles.customerToolbar} />
-            <div className={styles.customization} />
+            {/* <div className={styles.customization} /> */}
             <div className={styles.sendButton} onClick={hanldeClick}></div>
+            <Customerization />
+            <CustomerizationGif />
         </>
     );
 }

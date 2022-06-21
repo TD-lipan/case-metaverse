@@ -11,6 +11,7 @@ export default defineConfig({
   chainWebpack: (config) => {
     config.module
       .rule('mp4')
+      .rule('gif')
       .test(/\.(mp4|zip)(\?.*)?$/)
       .use('file-loader')
       .loader(require.resolve('file-loader'))
