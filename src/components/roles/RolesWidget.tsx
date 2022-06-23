@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
 import BaseRole from './BaseRole';
@@ -36,9 +36,40 @@ import surinPotterMsg from '../../assets/random3.png';
 import jamesAnyeniMsg2 from '../../assets/random4.png';
 import jamesAnyeniMsg3 from '../../assets/random5.png';
 import jamesAnyeniMsg4 from '../../assets/random6.png';
+import airpods from '../../assets/airpods.png';
+import airpodsHover from '../../assets/airpodsHover.png';
+import airpodsAgent from '../../assets/airpodsAgent.png';
+import { Action } from '@/components/automatic-typing';
+import InputBox from '@/components/input-box';
+import chatBubble1 from '../../assets/beforeCreateCase1.png';
+import chatBubble2 from '../../assets/beforeCreateCase2.png';
+import chatBubble3 from '../../assets/beforeCreateCase3.png';
+import chatBubble4 from '../../assets/beforeCreateCase4.png';
+import chatBubble5 from '../../assets/beforeCreateCase5.png';
+import chatBubble6 from '../../assets/beforeCreateCase6.png';
 
 const RolesWidget: React.FC = () => {
   const mainPanel = useRef<HTMLDivElement>(null);
+  const carlyYatesRole = useRef<CarlyYatesRole>();
+  // @ts-ignore
+  const teresaJuarezRole = useRef<BaseRole>();
+  const actions: Action[] = [
+    {
+      type: 'typing',
+      key: 0,
+      word: "that's a wonderful choice I would recommend you the white one as it is in stock",
+    },
+    { type: 'outbound', key: 1, src: chatBubble2 },
+    { type: 'inbound', key: 2, src: chatBubble3 },
+    {
+      type: 'typing',
+      key: 3,
+      word: 'We have a customization service, do you wanna try?',
+    },
+    { type: 'outbound', key: 4, src: chatBubble4 },
+    { type: 'inbound', key: 5, src: chatBubble5 },
+    { type: 'outbound', key: 6, src: chatBubble6 },
+  ];
 
   useLayoutEffect(() => {
     const _mainPanel = mainPanel.current;
@@ -96,18 +127,31 @@ const RolesWidget: React.FC = () => {
 
         carlyYates.bindForGroup<MouseEvent>('mouseover', () => {
           carlyYates.toggleMenu(true);
+          carlyYates.onHover(airpodsHover);
         });
 
         carlyYates.bindForGroup<MouseEvent>('mouseout', (event) => {
           carlyYates.toggleMenu(false);
+          carlyYates.onHover(airpods);
         });
 
         carlyYates.bind<MouseEvent>('click', () => {
           carlyYates.move();
           setTimeout(() => {
             teresaJuarez.move();
+            setTimeout(() => {
+              carlyYates.showAirPodsMsg(airpods, 192, 5);
+              // setTimeout(()=>{
+              //   carlyYates.onHover(airpodsHover)
+              //   setTimeout(()=>{carlyYates.hideAirPodsMsg()},1000)
+              // },5000);
+              teresaJuarez.showMessage(airpodsAgent, 1, 332, 178);
+            }, 1000);
           }, 1300);
         });
+
+        carlyYatesRole.current = carlyYates;
+        teresaJuarezRole.current = teresaJuarez;
 
         const pelinVenz = new BaseRole(app, 'pelinVenz', { x: 890, y: 400 });
         pelinVenz.setSacle({ x: 0.5, y: 0.5 });
@@ -154,11 +198,26 @@ const RolesWidget: React.FC = () => {
           x: 1546,
           y: 384,
         });
-        tomSive.showMessage(jamesAnyeniMsg4, 9, 394, 84);
+        tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
       });
   }, []);
 
-  return <div className={styles.rolesWidget} ref={mainPanel}></div>;
+  return (
+    <>
+      <InputBox
+        actions={actions}
+        onInBound={(action: Action) => {
+          action.src &&
+            teresaJuarezRole.current?.showMessage(action.src, 0.5, 100, 100);
+        }}
+        onOutBound={(action: Action) => {
+          action.src &&
+            carlyYatesRole.current?.showMessage(action.src, 0.5, 100, 100);
+        }}
+      />
+      <div className={styles.rolesWidget} ref={mainPanel}></div>
+    </>
+  );
 };
 
 export default RolesWidget;

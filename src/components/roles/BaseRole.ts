@@ -9,6 +9,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
   private name: string;
   private instance: T;
   private app: PIXI.Application;
+  private messageInstance: any = null;
 
   constructor(
     app: PIXI.Application,
@@ -59,17 +60,23 @@ export default class BaseRole<T extends PIXI.Sprite> {
     second: number,
     width: number,
     height: number,
+    isAuto?: boolean,
   ) {
     const afterX = this.instance.x + 53 - width / 2;
     const afterY = this.instance.y - height;
-
-    const messageBox = new Message(src);
+    this.messageInstance = new Message(src);
     setTimeout(() => {
-      messageBox.show(afterX, afterY);
-      setTimeout(() => {
-        messageBox.hide();
-      }, 2000);
+      this.messageInstance.show(afterX, afterY);
+      if (isAuto === undefined || isAuto) {
+        setTimeout(() => {
+          this.messageInstance.hide();
+        }, 2000);
+      }
     }, second * 1000);
+  }
+
+  public hideMessage() {
+    this.messageInstance.hide();
   }
 
   public getName() {
