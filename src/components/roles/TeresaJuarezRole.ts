@@ -17,7 +17,7 @@ export default class TeresaJuarezRole extends BaseRole<PIXI.AnimatedSprite> {
     const sprite = this.getInstance();
 
     new TWEEN.Tween(sprite)
-      .to({ x: 630, y: 488 }, 900)
+      .to({ x: 630, y: 489 }, 700)
       .onStart(() => sprite.play())
       .onComplete(() => setTimeout(() => sprite.stop(), 300))
       .start();

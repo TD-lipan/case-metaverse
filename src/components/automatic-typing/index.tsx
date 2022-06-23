@@ -24,6 +24,8 @@ export interface Action {
   key: string | number;
   word?: string;
   src?: string;
+  width?: number;
+  height?: number;
 }
 
 export default function ({
