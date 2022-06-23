@@ -37,7 +37,16 @@ import jamesAnyeniMsg2 from '../../assets/random4.png';
 import jamesAnyeniMsg3 from '../../assets/random5.png';
 import jamesAnyeniMsg4 from '../../assets/random6.png';
 
-const RolesWidget: React.FC = () => {
+interface RolesWidgetProps {
+  onInit: (
+    carlyYatesInstance: CarlyYatesRole,
+    teresaJuarez: TeresaJuarezRole,
+    toggleCommonRole: () => void,
+  ) => void;
+}
+
+const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
+  const { onInit } = props;
   const mainPanel = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -94,19 +103,8 @@ const RolesWidget: React.FC = () => {
           { x: 886, y: 540 },
         );
 
-        carlyYates.bindForGroup<MouseEvent>('mouseover', () => {
-          carlyYates.toggleMenu(true);
-        });
-
-        carlyYates.bindForGroup<MouseEvent>('mouseout', (event) => {
-          carlyYates.toggleMenu(false);
-        });
-
         carlyYates.bind<MouseEvent>('click', () => {
-          carlyYates.move();
-          setTimeout(() => {
-            teresaJuarez.move();
-          }, 1300);
+          carlyYates.toggleMenu();
         });
 
         const pelinVenz = new BaseRole(app, 'pelinVenz', { x: 890, y: 400 });
@@ -155,6 +153,13 @@ const RolesWidget: React.FC = () => {
           y: 384,
         });
         tomSive.showMessage(jamesAnyeniMsg4, 9, 394, 84);
+
+        onInit(carlyYates, teresaJuarez, () => {
+          [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
+            const instance = item.getInstance();
+            instance.visible = !instance.visible;
+          });
+        });
       });
   }, []);
 

@@ -1,4 +1,4 @@
-import BaseRole from './BaseRole';
+import BaseRole, { PointsType } from './BaseRole';
 import * as PIXI from 'pixi.js';
 import * as TWEEN from '@tweenjs/tween.js';
 import { addStaticRole, animate } from './roleUtils';
@@ -14,13 +14,12 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     resources: string[] | string,
     position: PIXI.IPointData,
   ) {
-    const origin = { x: 0, y: 0 };
-    super(app, resources, origin, false);
+    super(app, resources, { x: 0, y: 0 }, false);
 
     const sprite = this.getInstance();
     sprite.interactive = true;
 
-    this.menuInstance = this.initMenuInstance(app, origin);
+    this.menuInstance = this.initMenuInstance();
 
     this.groupInstance = new PIXI.Container();
     this.groupInstance.interactive = true;
@@ -31,13 +30,15 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     this.groupInstance.addChild(this.menuInstance);
 
     app.stage.addChild(this.groupInstance);
+    console.log(this.groupInstance.width, this.getGroupInstance.length);
   }
 
-  private initMenuInstance(app: PIXI.Application, position: PIXI.IPointData) {
-    const menuInstance: PIXI.Sprite = addStaticRole(app, 'carlyYatesToolbar', {
-      x: position.x + 109,
-      y: position.y + 15,
-    });
+  private initMenuInstance() {
+    const menuInstance: PIXI.Sprite = addStaticRole(
+      this.getApplication(),
+      'carlyYatesToolbar',
+      { x: 109, y: 15 },
+    );
 
     menuInstance.interactive = true;
     menuInstance.scale.set(0.5, 0.5);
@@ -46,19 +47,32 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     return menuInstance;
   }
 
-  public move() {
+  public move1() {
     const sprite = this.getInstance();
     const group = this.getGroupInstance();
 
     const p1 = new TWEEN.Tween(group)
-      .to({ x: 242, y: 380 }, 1000)
+      .to({ x: 242, y: 430 }, 1000)
       .onStart(() => sprite.play());
 
     const p2 = new TWEEN.Tween(group)
-      .to({ x: 530, y: 480 }, 1300)
+      .to({ x: 380, y: 490 }, 800)
       .onComplete(() => setTimeout(() => sprite.stop(), 300));
 
-    p1.chain(p2.delay(300)).start();
+    p1.chain(p2.delay(200)).start();
+    animate();
+  }
+
+  public move2() {
+    const sprite = this.getInstance();
+    const group = this.getGroupInstance();
+
+    const p1 = new TWEEN.Tween(group)
+      .to({ x: 530, y: 480 }, 1300)
+      .onStart(() => sprite.play())
+      .onComplete(() => setTimeout(() => sprite.stop(), 300));
+
+    p1.start();
     animate();
   }
 
@@ -66,8 +80,9 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     return this.groupInstance;
   }
 
-  public toggleMenu(visible: boolean) {
-    this.menuInstance.visible = visible;
+  public toggleMenu(visible?: boolean) {
+    this.menuInstance.visible =
+      visible != null ? visible : !this.menuInstance.visible;
   }
 
   public bind<E>(event: string, fn: (event: E) => unknown) {
@@ -82,12 +97,13 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     this.groupInstance.on(event, fn);
   }
 
-  public talk() {
-    console.log(
-      _add(
+  public getCenterPoint() {
+    return {
+      x: _add(
         this.groupInstance.getGlobalPosition().x,
         _divide(this.getInstance().width, 2),
       ),
-    );
+      y: this.groupInstance.getGlobalPosition().y,
+    };
   }
 }

@@ -5,6 +5,12 @@ import * as TWEEN from '@tweenjs/tween.js';
 import _add from 'lodash/add';
 import Message from '@/components/message/Message';
 
+export type PointsType = {
+  x: number;
+  y: number;
+  delay?: number;
+}[];
+
 export default class BaseRole<T extends PIXI.Sprite> {
   private name: string;
   private instance: T;
@@ -13,7 +19,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
   constructor(
     app: PIXI.Application,
     resources: string[] | string,
-    position: PIXI.IPointData,
+    position?: PIXI.IPointData,
     needToStage = true,
   ) {
     if (resources instanceof Array) {
@@ -27,6 +33,10 @@ export default class BaseRole<T extends PIXI.Sprite> {
     this.app = app;
     needToStage && app.stage.addChild(this.instance);
     this.randomPlay();
+  }
+
+  public getApplication() {
+    return this.app;
   }
 
   public randomPlay() {
@@ -99,7 +109,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
 
       const go = new TWEEN.Tween(instance)
         .to({ x: end }, 3000)
-        .easing(TWEEN.Easing.Elastic.InOut)
+        .easing(TWEEN.Easing.Cubic.InOut)
         .onComplete(() => {
           this.instance.width = -width;
           this.instance.position.x += width;
@@ -107,7 +117,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
 
       const back = new TWEEN.Tween(instance)
         .to({ x: start }, 3000)
-        .easing(TWEEN.Easing.Elastic.InOut)
+        .easing(TWEEN.Easing.Cubic.InOut)
         .onComplete(() => {
           this.instance.width = -width;
           this.instance.position.x -= width;
@@ -122,9 +132,10 @@ export default class BaseRole<T extends PIXI.Sprite> {
     }
   }
 
-  public talk() {
-    console.log(
-      _add(this.instance.position.x, _divide(this.instance.width, 2)),
-    );
+  public getCenterPoint() {
+    return {
+      x: _add(this.instance.position.x, _divide(this.instance.width, 2)),
+      y: this.instance.position.y,
+    };
   }
 }
