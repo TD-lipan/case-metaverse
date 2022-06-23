@@ -4,10 +4,12 @@ import * as TWEEN from '@tweenjs/tween.js';
 import { addStaticRole, animate } from './roleUtils';
 import _divide from 'lodash/divide';
 import _add from 'lodash/add';
+import Message from '@/components/message/Message';
 
 export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
   private menuInstance: PIXI.Sprite;
   private groupInstance: PIXI.Container;
+  private msgInstance: any = null;
 
   constructor(
     app: PIXI.Application,
@@ -25,7 +27,6 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     this.groupInstance.interactive = true;
     this.groupInstance.zIndex = 1;
     this.groupInstance.position.set(position.x, position.y);
-
     this.groupInstance.addChild(sprite);
     this.groupInstance.addChild(this.menuInstance);
 
@@ -95,6 +96,23 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
 
   public bindForGroup<E>(event: string, fn: (event: E) => unknown) {
     this.groupInstance.on(event, fn);
+  }
+
+  public showAirPodsMsg(src: string, width: number, height: number) {
+    const afterX =
+      this.groupInstance.getGlobalPosition().x + 53 - width / 2 + 30;
+    const afterY = this.groupInstance.getGlobalPosition().y - 140;
+    this.msgInstance = new Message(src);
+    setTimeout(() => {
+      this.msgInstance.show(afterX, afterY);
+    }, 100);
+  }
+  public onHover(src: string) {
+    if (this.msgInstance) this.msgInstance.changeSource(src);
+  }
+
+  public hideAirPodsMsg() {
+    if (this.msgInstance) this.msgInstance.hide();
   }
 
   public getCenterPoint() {

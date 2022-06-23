@@ -5,13 +5,13 @@ import Customerization from './Customerization';
 import Workspace from './workspace';
 
 export default function () {
-    return (
-        <>
-            <Workspace />
-            <div className={styles.toolbar} />
-            <div className={styles.customerToolbar} />
-            <CustomerizationGif />
-            <Customerization />
-        </>
-    );
+  return (
+    <>
+      <Workspace />
+      <div className={styles.toolbar} />
+      <div className={styles.customerToolbar} />
+      <CustomerizationGif />
+      <Customerization />
+    </>
+  );
 }

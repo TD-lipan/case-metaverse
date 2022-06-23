@@ -92,6 +92,16 @@ export default class Message {
     });
   }
 
+  public changeSource(src: string) {
+    this.imgElem?.addEventListener('mouseover', () => {
+      console.log(111);
+    });
+
+    if (this.imgElem) {
+      this.imgElem.src = src;
+    }
+  }
+
   public hide() {
     if (this.imgElem) {
       this.imgElem.className = 'animate__bounceOut';

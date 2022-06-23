@@ -2,8 +2,6 @@ import { Scene } from '@/pages/use-scene';
 import React, { useRef } from 'react';
 import CreateCase from '../create-case';
 import FilterBar from '../filter-bar';
-import InputBox from '../input-box';
-import styles from './index.less';
 import RolesWidget from '@/components/roles';
 import { Action } from '../automatic-typing';
 import * as PIXI from 'pixi.js';
@@ -20,6 +18,7 @@ import Message, {
 import airpods from '@/assets/B Airpods default 3@2x.png';
 import airpodsHover from '@/assets/B Airpods hover@2x.png';
 import agentRecommend from '@/assets/B discount information@2x.png';
+import InputBox from '@/components/input-box';
 
 const actions: Action[] = [
   { type: 'typing', key: 0, word: 'Could you see the VR model I sent you?' },

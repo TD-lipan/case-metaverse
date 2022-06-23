@@ -20,43 +20,102 @@ import T05 from './images/live-chat-bubble/T05.png';
 import T06 from './images/live-chat-bubble/T06.png';
 import { useState } from 'react';
 
-export default function ({ onStartDarg, step }: { onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void, step: number, setStep: React.Dispatch<React.SetStateAction<number>> }) {
-    const [wordsMerged, setWordsMerged] = useState<boolean>(false);
-    const chartAreaRef = useRef<HTMLElement>(null);
-    useEffect(() => {
-        if (!chartAreaRef.current) return;
-        chartAreaRef.current.scrollTop = chartAreaRef.current.scrollHeight;
-    });
+export default function ({
+  onStartDarg,
+  step,
+}: {
+  onStartDarg: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const [wordsMerged, setWordsMerged] = useState<boolean>(false);
+  const chartAreaRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!chartAreaRef.current) return;
+    chartAreaRef.current.scrollTop = chartAreaRef.current.scrollHeight;
+  });
 
-    const renderLiveChatBubble = () => {
-        return (
-            <>
-                {step >= 1 && <div className={styles.liveChatBubble} ><img src={T03} style={{ float: 'right' }} /></div>}
-                {step >= 2 && <div className={styles.liveChatBubble} ><img src={C04} /></div>}
-                {step >= 3 && <div className={styles.liveChatBubble} style={{ height: "90px" }}><img src={T04} style={{ float: 'right' }} /></div>}
-                {step >= 4 && <div className={styles.liveChatBubble} ><img src={C05} /></div>}
-                {step >= 5 && <div className={styles.liveChatBubble} style={{ height: "70px" }} ><img src={C06} /></div>}
-                {step >= 6 && <div className={styles.liveChatBubble} style={{ height: "70px" }}><img src={C07} /></div>}
-                {step >= 7 && <div className={styles.liveChatBubble} ><img src={T05} style={{ float: 'right' }} /></div>}
-                {step >= 8 && <div className={styles.liveChatBubble} ><img src={C08} /></div>}
-                {step >= 9 && <div className={styles.liveChatBubble} ><img src={T06} style={{ float: 'right' }} /></div>}
-            </>
-        )
-    }
-
+  const renderLiveChatBubble = () => {
     return (
-        <>
-            <div className={styles.chartArea} ref={chartAreaRef}>
-                {!wordsMerged && renderLiveChatBubble()}
-                {step >= 10 && <div className={styles.time} style={{ top: '6px' }}>11:20AM</div>}
-                {step >= 10 && !wordsMerged && <div className={styles.infoMessage}><div className={styles.infoMessageBtn} onClick={() => { setWordsMerged(true);}}></div></div>}
-                {step >= 10 && wordsMerged && <div className={styles.airpods} />}
-
-                {step >= 11 && <div className={styles.time} style={{ top: '110px' }}>11:28AM</div>}
-                {step >= 11 && <OrderPaid onStartDarg={onStartDarg} />}
-                {step >= 12 && <div className={styles.emailCard} />}
-
-            </div>
-        </>
+      <>
+        {step >= 1 && (
+          <div className={styles.liveChatBubble}>
+            <img src={T03} style={{ float: 'right' }} />
+          </div>
+        )}
+        {step >= 2 && (
+          <div className={styles.liveChatBubble}>
+            <img src={C04} />
+          </div>
+        )}
+        {step >= 3 && (
+          <div className={styles.liveChatBubble} style={{ height: '90px' }}>
+            <img src={T04} style={{ float: 'right' }} />
+          </div>
+        )}
+        {step >= 4 && (
+          <div className={styles.liveChatBubble}>
+            <img src={C05} />
+          </div>
+        )}
+        {step >= 5 && (
+          <div className={styles.liveChatBubble} style={{ height: '70px' }}>
+            <img src={C06} />
+          </div>
+        )}
+        {step >= 6 && (
+          <div className={styles.liveChatBubble} style={{ height: '70px' }}>
+            <img src={C07} />
+          </div>
+        )}
+        {step >= 7 && (
+          <div className={styles.liveChatBubble}>
+            <img src={T05} style={{ float: 'right' }} />
+          </div>
+        )}
+        {step >= 8 && (
+          <div className={styles.liveChatBubble}>
+            <img src={C08} />
+          </div>
+        )}
+        {step >= 9 && (
+          <div className={styles.liveChatBubble}>
+            <img src={T06} style={{ float: 'right' }} />
+          </div>
+        )}
+      </>
     );
+  };
+
+  return (
+    <>
+      <div className={styles.chartArea} ref={chartAreaRef}>
+        {!wordsMerged && renderLiveChatBubble()}
+        {step >= 10 && (
+          <div className={styles.time} style={{ top: '6px' }}>
+            11:20AM
+          </div>
+        )}
+        {step >= 10 && !wordsMerged && (
+          <div className={styles.infoMessage}>
+            <div
+              className={styles.infoMessageBtn}
+              onClick={() => {
+                setWordsMerged(true);
+              }}
+            ></div>
+          </div>
+        )}
+        {step >= 10 && wordsMerged && <div className={styles.airpods} />}
+
+        {step >= 11 && (
+          <div className={styles.time} style={{ top: '110px' }}>
+            11:28AM
+          </div>
+        )}
+        {step >= 11 && <OrderPaid onStartDarg={onStartDarg} />}
+        {step >= 12 && <div className={styles.emailCard} />}
+      </div>
+    </>
+  );
 }
