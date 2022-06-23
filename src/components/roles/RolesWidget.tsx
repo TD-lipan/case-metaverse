@@ -48,7 +48,16 @@ import chatBubble4 from '../../assets/beforeCreateCase4.png';
 import chatBubble5 from '../../assets/beforeCreateCase5.png';
 import chatBubble6 from '../../assets/beforeCreateCase6.png';
 
-const RolesWidget: React.FC = () => {
+interface RolesWidgetProps {
+  onInit: (
+    carlyYatesInstance: CarlyYatesRole,
+    teresaJuarez: TeresaJuarezRole,
+    toggleCommonRole: () => void,
+  ) => void;
+}
+
+const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
+  const { onInit } = props;
   const mainPanel = useRef<HTMLDivElement>(null);
   const carlyYatesRole = useRef<CarlyYatesRole>();
   // @ts-ignore
@@ -136,18 +145,7 @@ const RolesWidget: React.FC = () => {
         });
 
         carlyYates.bind<MouseEvent>('click', () => {
-          carlyYates.move();
-          setTimeout(() => {
-            teresaJuarez.move();
-            setTimeout(() => {
-              carlyYates.showAirPodsMsg(airpods, 192, 5);
-              // setTimeout(()=>{
-              //   carlyYates.onHover(airpodsHover)
-              //   setTimeout(()=>{carlyYates.hideAirPodsMsg()},1000)
-              // },5000);
-              teresaJuarez.showMessage(airpodsAgent, 1, 332, 178);
-            }, 1000);
-          }, 1300);
+          carlyYates.toggleMenu();
         });
 
         carlyYatesRole.current = carlyYates;
@@ -199,6 +197,13 @@ const RolesWidget: React.FC = () => {
           y: 384,
         });
         tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
+
+        onInit(carlyYates, teresaJuarez, () => {
+          [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
+            const instance = item.getInstance();
+            instance.visible = !instance.visible;
+          });
+        });
       });
   }, []);
 
