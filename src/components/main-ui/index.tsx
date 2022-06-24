@@ -48,8 +48,8 @@ export default function ({
 }: {
   setScene: React.Dispatch<React.SetStateAction<Scene>>;
 }) {
-  const carlyYates = useRef<CarlyYatesRole>();
-  const teresaJuarez = useRef<TeresaJuarezRole>();
+  const carlyYates = useRef<CarlyYatesRole | null>(null);
+  const teresaJuarez = useRef<TeresaJuarezRole | null>(null);
   const toggleCommonRole = useRef(() => {});
   const currentMessage = useRef<Message>();
 

@@ -98,6 +98,10 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     this.groupInstance.on(event, fn);
   }
 
+  public setPosition(position: PIXI.IPointData) {
+    this.groupInstance.position.set(position.x, position.y);
+  }
+
   public showAirPodsMsg(src: string, width: number, height: number) {
     const afterX =
       this.groupInstance.getGlobalPosition().x + 53 - width / 2 + 30;
@@ -107,6 +111,7 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
       this.msgInstance.show(afterX, afterY);
     }, 100);
   }
+
   public onHover(src: string) {
     if (this.msgInstance) this.msgInstance.changeSource(src);
   }

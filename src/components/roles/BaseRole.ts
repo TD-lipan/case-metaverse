@@ -106,6 +106,10 @@ export default class BaseRole<T extends PIXI.Sprite> {
       this.instance.animationSpeed = speed;
   }
 
+  public setPosition(position: PIXI.IPointData) {
+    this.instance.position.set(position.x, position.y);
+  }
+
   public move() {
     const instance = this.instance;
 

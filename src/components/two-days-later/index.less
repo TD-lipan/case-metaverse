@@ -21,3 +21,25 @@
   z-index: 102;
   pointer-events: none;
 }
+.notification {
+  position: absolute;
+  display: block;
+  object-fit: cover;
+  width: 662px;
+  height: 48px;
+  cursor: pointer;
+  left: 1672px;
+  top: 18px;
+  z-index: 3;
+  animation: notificationAnim 7s linear;
+}
+
+@keyframes notificationAnim {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-2332px);
+  }
+}

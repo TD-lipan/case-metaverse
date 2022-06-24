@@ -13,12 +13,14 @@ export default function ({
   visible = true,
   isDraged,
   isEmpty = true,
+  onClick = () => {},
 }: {
   left?: number;
   top?: number;
   visible?: boolean;
   isDraged: boolean;
   isEmpty: boolean;
+  onClick?: () => void;
 }) {
   const [src, setSrc] = useState<string>(profile1_1);
   return (
@@ -28,8 +30,10 @@ export default function ({
         top: top + 'px',
         left: left + 'px',
         display: visible ? 'block' : 'none',
+        position: 'relative',
       }}
     >
+      <div className={styles.closeButton} onClick={onClick}></div>
       <div className={styles.tabs}>
         <div
           className={styles.div1}
