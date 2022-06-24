@@ -35,10 +35,11 @@ import carlyYatesToolbar from '../../assets/images/roles/Customer toolbar in hom
 import TeresaJuarezRole from './TeresaJuarezRole';
 import damonMensonMsg from '../../assets/random1.png';
 import jamesAnyeniMsg from '../../assets/random2.png';
-import surinPotterMsg from '../../assets/random3.png';
+import damonMensonMsg2 from '../../assets/random3.png';
 import jamesAnyeniMsg2 from '../../assets/random4.png';
-import jamesAnyeniMsg3 from '../../assets/random5.png';
-import jamesAnyeniMsg4 from '../../assets/random6.png';
+import surinPotterMsg from '../../assets/random5.png';
+import jadeKinzelMsg from '../../assets/random6.png';
+import luisMeloMsg from '../../assets/random7.png';
 import titoDias from '../../assets/images/roles/Tito Dias.png';
 import juneCadavez from '../../assets/images/roles/June Cadavez.png';
 
@@ -153,6 +154,7 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           { x: 430, y: 166 },
         );
         showFreeDialogue && damonMenson.showMessage(damonMensonMsg, 2, 178, 70);
+        // showFreeDialogue && damonMenson.showMessage(damonMensonMsg2, 9, 312, 70);
 
         const emmyElsner = new BaseRole(
           app,
@@ -171,7 +173,7 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           x: 959,
           y: 632,
         });
-        showFreeDialogue && jadeKinzel.showMessage(jamesAnyeniMsg3, 9, 394, 84);
+        showFreeDialogue && jadeKinzel.showMessage(jadeKinzelMsg, 9, 394, 84);
 
         const jamesAnyeni = new BaseRole(
           app,
@@ -179,7 +181,7 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           { x: 1245, y: 189 },
         );
         showFreeDialogue &&
-          jamesAnyeni.showMessage(jamesAnyeniMsg, 12, 394, 84);
+          jamesAnyeni.showMessage(jamesAnyeniMsg, 12, 324, 74);
         showFreeDialogue &&
           jamesAnyeni.showMessage(jamesAnyeniMsg2, 7, 394, 84);
 
@@ -189,13 +191,12 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           { x: 1178, y: 438 },
         );
 
-        showFreeDialogue && surinPotter.showMessage(surinPotterMsg, 3, 394, 70);
-
         const tomSive = new BaseRole(app, ['tomSive01', 'tomSive02'], {
           x: 1546,
           y: 384,
         });
-        showFreeDialogue && tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
+        showFreeDialogue && surinPotter.showMessage(surinPotterMsg, 8, 340, 84);
+        showFreeDialogue && tomSive.showMessage(luisMeloMsg, 4, 149, 70);
 
         [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
           const instance = item.getInstance();
