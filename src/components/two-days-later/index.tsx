@@ -53,9 +53,6 @@ export default function () {
 
       if (!cy || !tj) return;
 
-      cy.setPosition({ x: 580, y: 510 });
-      tj.setPosition({ x: 850, y: 509 });
-
       const callBoxW = 120;
       const callBoxH = 120;
       const callBox = new Message(callImg, {
@@ -82,11 +79,13 @@ export default function () {
         callBox.show(callBoxP.x + 5, callBoxP.y);
       }, 1000);
     }, 500);
-  }, [carlyYates.current, teresaJuarez.current]);
+  }, []);
 
   return (
     <>
       <RolesWidget
+        carlyYatesProps={{ position: { x: 580, y: 510 } }}
+        teresaJuarezProps={{ position: { x: 850, y: 509 } }}
         onInit={(cy, tj, fn) => {
           carlyYates.current = cy;
           teresaJuarez.current = tj;

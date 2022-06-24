@@ -38,6 +38,12 @@ import jamesAnyeniMsg3 from '../../assets/random5.png';
 import jamesAnyeniMsg4 from '../../assets/random6.png';
 
 interface RolesWidgetProps {
+  carlyYatesProps?: {
+    position: PIXI.IPointData;
+  };
+  teresaJuarezProps?: {
+    position: PIXI.IPointData;
+  };
   onInit: (
     carlyYatesInstance: CarlyYatesRole,
     teresaJuarez: TeresaJuarezRole,
@@ -46,7 +52,7 @@ interface RolesWidgetProps {
 }
 
 const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
-  const { onInit } = props;
+  const { onInit, carlyYatesProps, teresaJuarezProps } = props;
   const mainPanel = useRef<HTMLDivElement>(null);
   const carlyYatesRole = useRef<CarlyYatesRole>();
   // @ts-ignore
@@ -97,13 +103,17 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
         const carlyYates = new CarlyYatesRole(
           app,
           ['carlyYates01', 'carlyYates03'],
-          { x: 260, y: 190 },
+          carlyYatesProps?.position
+            ? carlyYatesProps.position
+            : { x: 260, y: 190 },
         );
 
         const teresaJuarez = new TeresaJuarezRole(
           app,
           ['teresaJuarez01', 'teresaJuarez03'],
-          { x: 886, y: 540 },
+          teresaJuarezProps?.position
+            ? teresaJuarezProps.position
+            : { x: 886, y: 540 },
         );
 
         carlyYates.bind<MouseEvent>('click', () => {
