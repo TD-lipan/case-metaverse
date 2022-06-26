@@ -44,7 +44,8 @@ interface RolesWidgetProps {
   teresaJuarezProps?: {
     position: PIXI.IPointData;
   };
-  onInit: (
+  showFreeDialogue?: boolean;
+  onInit?: (
     carlyYatesInstance: CarlyYatesRole,
     teresaJuarez: TeresaJuarezRole,
     toggleCommonRole: () => void,
@@ -52,7 +53,8 @@ interface RolesWidgetProps {
 }
 
 const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
-  const { onInit, carlyYatesProps, teresaJuarezProps } = props;
+  const { onInit, carlyYatesProps, teresaJuarezProps, showFreeDialogue = false } =
+    props;
   const mainPanel = useRef<HTMLDivElement>(null);
   const carlyYatesRole = useRef<CarlyYatesRole>();
   // @ts-ignore
@@ -133,7 +135,7 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           ['damonMenson01', 'damonMenson02'],
           { x: 430, y: 166 },
         );
-        damonMenson.showMessage(damonMensonMsg, 2, 178, 70);
+        showFreeDialogue && damonMenson.showMessage(damonMensonMsg, 2, 178, 70);
 
         const emmyElsner = new BaseRole(app, ['emmyElsner01', 'emmyElsner02'], {
           x: 540,
@@ -146,15 +148,17 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           x: 959,
           y: 632,
         });
-        jadeKinzel.showMessage(jamesAnyeniMsg3, 9, 394, 84);
+        showFreeDialogue && jadeKinzel.showMessage(jamesAnyeniMsg3, 9, 394, 84);
 
         const jamesAnyeni = new BaseRole(
           app,
           ['jamesAnyeni01', 'jamesAnyeni02'],
           { x: 1245, y: 189 },
         );
-        jamesAnyeni.showMessage(jamesAnyeniMsg, 12, 394, 84);
-        jamesAnyeni.showMessage(jamesAnyeniMsg2, 7, 394, 84);
+        showFreeDialogue &&
+          jamesAnyeni.showMessage(jamesAnyeniMsg, 12, 394, 84);
+        showFreeDialogue &&
+          jamesAnyeni.showMessage(jamesAnyeniMsg2, 7, 394, 84);
 
         const surinPotter = new BaseRole(
           app,
@@ -162,15 +166,15 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           { x: 1178, y: 438 },
         );
 
-        surinPotter.showMessage(surinPotterMsg, 3, 394, 70);
+        showFreeDialogue && surinPotter.showMessage(surinPotterMsg, 3, 394, 70);
 
         const tomSive = new BaseRole(app, ['tomSive01', 'tomSive02'], {
           x: 1546,
           y: 384,
         });
-        tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
+        showFreeDialogue && tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
 
-        onInit(carlyYates, teresaJuarez, () => {
+        onInit?.(carlyYates, teresaJuarez, () => {
           [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
             const instance = item.getInstance();
             instance.visible = !instance.visible;

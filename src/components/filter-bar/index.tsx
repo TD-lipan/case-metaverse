@@ -5,7 +5,7 @@ type FilterType = 'default' | 'hover' | 'selected';
 
 type FilterBarProps = {
   type?: FilterType;
-  onClick?: () => void;
+  onClick?: (flag: boolean) => void;
 };
 
 export default function FilterBar(props: FilterBarProps) {
@@ -30,8 +30,9 @@ export default function FilterBar(props: FilterBarProps) {
       onMouseOver={() => filterType !== 'selected' && setFilterType('hover')}
       onMouseOut={() => filterType !== 'selected' && setFilterType('default')}
       onClick={() => {
-        setFilterType(filterType === 'selected' ? 'default' : 'selected');
-        onClick && onClick();
+        const type = filterType === 'selected' ? 'default' : 'selected';
+        setFilterType(type);
+        onClick && onClick(type !== 'selected');
       }}
     >
       <div></div>

@@ -15,10 +15,10 @@ import styles from './index.less';
 
 import callDrag from './images/call_drag.png';
 import callImg from '@/assets/Call- icon@2x.png';
-import notificationImg from '@/assets/Notification@2x.png';
+import notificationImg from '@/assets/Notification.png';
 import { useCallback } from 'react';
 
-export default function () {
+export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
   const {
     noDarg,
     draging,
@@ -59,6 +59,7 @@ export default function () {
         width: callBoxW + 'px',
         height: callBoxH + 'px',
         cursor: 'pointer',
+        animationDuration: '1.2s',
       });
 
       const callBoxP = calculatePositionBySizeAndCenterPoint(
@@ -67,17 +68,17 @@ export default function () {
         cy.getCenterPoint(),
       );
 
-      callBox.getImgInstance().then((elem) =>
-        elem.addEventListener('click', () => {
-          callBox.hide();
-          setCallVisible(true);
-          setTimeout(() => setProfileVisible(true), 1000);
-        }),
-      );
-
       setTimeout(() => {
         callBox.show(callBoxP.x + 5, callBoxP.y);
-      }, 1000);
+        callBox.getImgInstance().then((elem) => {
+          elem.className = 'animate__animated animate__tada animate__infinite';
+          elem.addEventListener('click', () => {
+            callBox.hide();
+            setCallVisible(true);
+            setTimeout(() => setProfileVisible(true), 1000);
+          });
+        });
+      }, 500);
     }, 500);
   }, []);
 
@@ -114,6 +115,7 @@ export default function () {
         onMouseLeave={onEndMouseLeave}
       ></div>
       <FilterBar
+        type={showCommonRoles ? 'default' : 'selected'}
         onClick={() => {
           toggleCommonRole.current();
         }}

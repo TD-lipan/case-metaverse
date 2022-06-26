@@ -71,7 +71,7 @@ export default class Message {
       this.imgElem.style.left = x + 'px';
       this.imgElem.style.top = y + 'px';
       this.imgElem.style.display = 'block';
-      this.imgElem.className = 'animate__bounceIn';
+      this.imgElem.classList.add('animate__bounceIn');
     }
 
     if (delay != null) setTimeout(() => this.hide(), delay);

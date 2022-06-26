@@ -4,14 +4,21 @@
   position: absolute;
   top: 0;
   left: 87px;
-  z-index: 1;
+  z-index: 2;
   background-size: 100% auto;
+  cursor: pointer;
 }
 
 .multiTab1:extend(.multiTab) {
   background-image: url(./images/multi_tab01.png);
+  &:hover {
+    background-image: url(./images/multi_tab02.png);
+  }
 }
 
 .multiTab2:extend(.multiTab) {
-  background-image: url(./images/multi_tab02.png);
+  background-image: url(./images/multi_tab01_filter.png);
+  &:hover {
+    background-image: url(./images/multi_tab02_filter.png);
+  }
 }

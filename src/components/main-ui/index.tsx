@@ -45,8 +45,10 @@ const actions: Action[] = [
 
 export default function ({
   setScene,
+  onToggleCommonRole = (flag: boolean) => {},
 }: {
   setScene: React.Dispatch<React.SetStateAction<Scene>>;
+  onToggleCommonRole: (flag: boolean) => void;
 }) {
   const carlyYates = useRef<CarlyYatesRole | null>(null);
   const teresaJuarez = useRef<TeresaJuarezRole | null>(null);
@@ -140,14 +142,15 @@ export default function ({
           cy.getCenterPoint(),
         );
         airpodsBox.show(_subtract(airpodsBoxP.x, 48), airpodsBoxP.y);
-        setTimeout(() => tj.move1(), 800);
-      }, 2000);
+        setTimeout(() => tj.move1(), 700);
+      }, 2300);
     });
   }, []);
 
   return (
     <>
       <RolesWidget
+        showFreeDialogue={true}
         onInit={(cy, tj, fn) => {
           carlyYates.current = cy;
           teresaJuarez.current = tj;
@@ -162,8 +165,9 @@ export default function ({
         setScene={setScene}
       />
       <FilterBar
-        onClick={() => {
+        onClick={(flag: boolean) => {
           toggleCommonRole.current();
+          onToggleCommonRole(flag);
           move1();
         }}
       />

@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
+import classNames from 'classnames';
+
 import styles from './index.less';
 
 interface AutomaticTypingProp {
@@ -44,22 +44,24 @@ export default function ({
   const automaticTypingRef = useRef<HTMLElement>(null);
   const [actionIndex, setActionIndex] = useState<number>(0);
   const [word, setWord] = useState<string>('');
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const timerRef = useRef<any>(null);
 
   const action = useMemo(() => actions[actionIndex], [actions, actionIndex]);
 
   const handleKeyPress = (e: any) => {
-    const { key, keyCode } = e;
+    const { keyCode } = e;
     if (keyCode !== 13) return;
     if (!action) return;
 
     if (action.type === 'typing' && action.word) {
       setWord(action.word);
       setActionIndex((prev) => prev + 1);
-    }
-    if (action.type === 'inbound') {
+    } else if (action.type === 'inbound') {
       onInBound?.(action);
       setActionIndex((prev) => prev + 1);
+    } else if (action.type === 'outbound' && !isTyping) {
+      hanldeSend();
     }
   };
 
@@ -79,18 +81,22 @@ export default function ({
   }, [handleKeyPress]);
 
   const automaticTyping = (str: string) => {
+    const automaticTypingElem = automaticTypingRef.current;
+    if (isTyping || !automaticTypingElem) return;
+
+    setIsTyping(true);
+
     let tempText = '';
     let i = 0;
-    if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      if (!automaticTypingRef.current) return;
       if (tempText.length < str.length) {
         tempText += str[i++];
-        automaticTypingRef.current.innerHTML = tempText;
-      } else {
-        if (timerRef.current) clearInterval(timerRef.current);
-        automaticTypingRef.current.innerHTML = tempText;
+      } else if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+        setIsTyping(false);
       }
+      automaticTypingElem.innerHTML = tempText;
     }, 20);
   };
 
@@ -134,7 +140,10 @@ export default function ({
         </span>
       )}
       <div
-        className={styles.sendButton}
+        className={classNames(
+          styles.sendButton,
+          !isTyping && word && styles.active,
+        )}
         style={{
           width: sendWidth,
           height: sendHeight,
