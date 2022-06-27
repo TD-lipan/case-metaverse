@@ -10,17 +10,19 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
   private menuInstance: PIXI.Sprite;
   private groupInstance: PIXI.Container;
   private msgInstance: any = null;
+  private jumpResources: string[] = [];
 
   constructor(
     app: PIXI.Application,
     resources: string[] | string,
     position: PIXI.IPointData,
+    jumpResources: string[],
   ) {
-    super(app, resources, { x: 0, y: 0 }, false);
+    super(app, resources, { x: 0, y: 0 }, false, false);
 
     const sprite = this.getInstance();
     sprite.interactive = true;
-
+    this.jumpResources = jumpResources;
     this.menuInstance = this.initMenuInstance();
 
     this.groupInstance = new PIXI.Container();
@@ -32,6 +34,27 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
 
     app.stage.addChild(this.groupInstance);
     console.log(this.groupInstance.width, this.getGroupInstance.length);
+  }
+
+  public jump() {
+    const instance = this.getInstance();
+    const app = this.getApp();
+
+    instance.stop();
+    instance.textures = this.jumpResources.reduce(
+      (textures: PIXI.Texture[], res: string) => {
+        const texture = app.loader.resources[res].texture;
+
+        texture && textures.push(texture);
+
+        return textures;
+      },
+      [],
+    );
+
+    setTimeout(() => {
+      instance.play();
+    }, 300);
   }
 
   private initMenuInstance() {

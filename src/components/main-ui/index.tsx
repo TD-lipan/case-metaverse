@@ -52,7 +52,7 @@ export default function ({
 }) {
   const carlyYates = useRef<CarlyYatesRole | null>(null);
   const teresaJuarez = useRef<TeresaJuarezRole | null>(null);
-  const toggleCommonRole = useRef(() => {});
+  const toggleCommonRole = useRef((visible: boolean) => {});
   const currentMessage = useRef<Message>();
 
   const [createCaseVisible, setCreateCaseVisible] = useState(false);
@@ -104,7 +104,9 @@ export default function ({
 
       if (!cy || !tj) return;
 
-      cy.move1();
+      setTimeout(() => {
+        cy.move1();
+      }, 2300);
 
       const airpodsBox = new Message(airpods, {
         width: 192,
@@ -132,11 +134,11 @@ export default function ({
 
       setTimeout(() => {
         airpodsBox.showByCenterPosition(cy.getCenterPoint(), 0, {
-          x: 48,
+          x: -48,
           y: 0,
         });
         setTimeout(() => tj.move1(), 700);
-      }, 2300);
+      }, 5200);
     });
   }, []);
 
@@ -159,7 +161,7 @@ export default function ({
       />
       <FilterBar
         onClick={(flag: boolean) => {
-          toggleCommonRole.current();
+          toggleCommonRole.current(flag);
           onToggleCommonRole(flag);
           move1();
         }}

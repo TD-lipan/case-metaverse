@@ -9,7 +9,7 @@ export default class TeresaJuarezRole extends BaseRole<PIXI.AnimatedSprite> {
     resources: string[] | string,
     position: PIXI.IPointData,
   ) {
-    super(app, resources, position);
+    super(app, resources, position, true, false);
     this.getInstance().interactive = true;
   }
 

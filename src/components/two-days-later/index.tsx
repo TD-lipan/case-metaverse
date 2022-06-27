@@ -37,7 +37,7 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
   } = useDrag();
   const carlyYates = useRef<CarlyYatesRole | null>(null);
   const teresaJuarez = useRef<TeresaJuarezRole | null>(null);
-  const toggleCommonRole = useRef(() => {});
+  const toggleCommonRole = useRef((visible: boolean) => {});
   const [callVisible, setCallVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const [notificationVisible, setNotificationVisible] = useState(false);
@@ -46,18 +46,23 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
     setCallVisible(false);
     setProfileVisible(false);
     setTimeout(() => {
-      carlyYates.current && popFireworks(carlyYates.current.getCenterPoint());
-      setNotificationVisible(true);
-    }, 500);
+      if (carlyYates.current) {
+        popFireworks(carlyYates.current);
+        setNotificationVisible(true);
+      }
+    }, 1000);
   }, []);
 
-  const popFireworks = useCallback((centerPosition: PIXI.IPointData) => {
+  const popFireworks = useCallback((cy: CarlyYatesRole) => {
+    const centerPosition = cy.getCenterPoint();
+    cy.jump();
+
     const blueImg = new Message(
       Blue,
       {
         width: 206,
         height: 146,
-        animationDuration: '0.85s',
+        animationDuration: '1s',
       },
       {
         showAnimationName:
@@ -67,14 +72,14 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
 
     setTimeout(() => {
       blueImg.showByCenterPosition(centerPosition, 0, { x: 7, y: 118 });
-    }, 550);
+    }, 300);
 
     const redImg = new Message(
       Red,
       {
         width: 197,
         height: 130,
-        animationDuration: '1.1s',
+        animationDuration: '1s',
       },
       {
         showAnimationName:
@@ -84,7 +89,7 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
 
     setTimeout(() => {
       redImg.showByCenterPosition(centerPosition, 0, { x: -7, y: 120 });
-    }, 400);
+    }, 200);
 
     const greenImg = new Message(
       Green,
@@ -101,7 +106,7 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
 
     setTimeout(() => {
       greenImg.showByCenterPosition(centerPosition, 0, { x: -4, y: 71 });
-    }, 200);
+    }, 100);
   }, []);
 
   useLayoutEffect(() => {
@@ -147,7 +152,13 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
           toggleCommonRole.current = fn;
         }}
       />
-      <Call visible={callVisible} onStartDarg={onStartDarg} />
+      <Call
+        visible={callVisible}
+        onStartDarg={(e) => {
+          setCallVisible(false);
+          onStartDarg(e);
+        }}
+      />
       <CustomerProfile
         visible={profileVisible}
         isDraged={isDraged}
@@ -170,8 +181,8 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
       ></div>
       <FilterBar
         type={showCommonRoles ? 'default' : 'selected'}
-        onClick={() => {
-          toggleCommonRole.current();
+        onClick={(flag) => {
+          toggleCommonRole.current(flag);
         }}
       />
     </>

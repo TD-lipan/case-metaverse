@@ -78,7 +78,6 @@ export default function ({ marginLeft }: { marginLeft: number }) {
 
         <ChannelBar />
 
-
         <AutomaticTyping
           width={666}
           height={85}
@@ -86,8 +85,8 @@ export default function ({ marginLeft }: { marginLeft: number }) {
           top={725}
           sendWidth={70}
           sendHeight={24}
-          sendLeft={769}
-          sendTop={835}
+          sendLeft={589}
+          sendTop={825}
           onInBound={(action: Action) => {
             setStep(Number(action.key) + 1);
           }}

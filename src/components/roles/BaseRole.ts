@@ -3,6 +3,7 @@ import { addDynamicRole, addStaticRole, animate } from './roleUtils';
 import _divide from 'lodash/divide';
 import * as TWEEN from '@tweenjs/tween.js';
 import _add from 'lodash/add';
+import _random from 'lodash/random';
 import Message from '@/components/message/Message';
 
 export type PointsType = {
@@ -22,6 +23,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
     resources: string[] | string,
     position?: PIXI.IPointData,
     needToStage = true,
+    randomPlay = true,
   ) {
     if (resources instanceof Array) {
       this.name = resources[0].replace(/\d{2,}$/, '');
@@ -33,7 +35,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
 
     this.app = app;
     needToStage && app.stage.addChild(this.instance);
-    this.randomPlay();
+    randomPlay && this.randomPlay();
   }
 
   public getApplication() {
@@ -41,8 +43,6 @@ export default class BaseRole<T extends PIXI.Sprite> {
   }
 
   public randomPlay() {
-    const random = Math.ceil(Math.random() * 5);
-
     setTimeout(() => {
       if (this.instance instanceof PIXI.AnimatedSprite) {
         this.instance.play();
@@ -54,7 +54,7 @@ export default class BaseRole<T extends PIXI.Sprite> {
           this.randomPlay();
         }
       }, 2000);
-    }, random * 1000);
+    }, _random(1000, 5000));
   }
 
   public getApp() {
@@ -119,23 +119,33 @@ export default class BaseRole<T extends PIXI.Sprite> {
       const end = position.x + 500;
 
       const go = new TWEEN.Tween(instance)
-        .to({ x: end }, 3000)
-        .easing(TWEEN.Easing.Cubic.InOut)
+        .to({ x: end }, _random(3000, 5000))
+        .onStart(() => {
+          instance.play();
+        })
         .onComplete(() => {
+          setTimeout(() => {
+            instance.stop();
+          }, 300);
           this.instance.width = -width;
           this.instance.position.x += width;
         });
 
       const back = new TWEEN.Tween(instance)
-        .to({ x: start }, 3000)
-        .easing(TWEEN.Easing.Cubic.InOut)
+        .to({ x: start }, _random(3000, 5000))
+        .onStart(() => {
+          instance.play();
+        })
         .onComplete(() => {
+          setTimeout(() => {
+            instance.stop();
+          }, 300);
           this.instance.width = -width;
           this.instance.position.x -= width;
         });
 
-      go.chain(back.delay(3000));
-      back.chain(go.delay(3000));
+      go.chain(back.delay(_random(2000, 4000)));
+      back.chain(go.delay(_random(2000, 4000)));
 
       go.start();
 

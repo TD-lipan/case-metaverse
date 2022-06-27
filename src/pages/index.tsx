@@ -13,7 +13,7 @@ import MainUi from '@/components/main-ui';
 import TwoDaysLater from '@/components/two-days-later';
 
 export default function IndexPage() {
-  const { scene, setScene } = useScene(Scene.TwoDaysLater);
+  const { scene, setScene } = useScene(Scene.Main);
   const [showCommonRoles, setShowCommonRoles] = useState(true);
 
   const handleToggleCommonRole = useCallback((flag: boolean) => {

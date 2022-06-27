@@ -1,11 +1,14 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import * as PIXI from 'pixi.js';
-
+import * as TWEEN from '@tweenjs/tween.js';
 import BaseRole from './BaseRole';
 import CarlyYatesRole from './CarlyYatesRole';
-
+import { animate } from './roleUtils';
 import styles from './RolesWidget.less';
 import 'animate.css';
+import _add from 'lodash/add';
+import _divide from 'lodash/divide';
+import _random from 'lodash/random';
 
 import carlyYates01 from '../../assets/images/roles/Carly Yates01.png';
 import carlyYates02 from '../../assets/images/roles/Carly Yates02.png';
@@ -36,6 +39,8 @@ import surinPotterMsg from '../../assets/random3.png';
 import jamesAnyeniMsg2 from '../../assets/random4.png';
 import jamesAnyeniMsg3 from '../../assets/random5.png';
 import jamesAnyeniMsg4 from '../../assets/random6.png';
+import titoDias from '../../assets/images/roles/Tito Dias.png';
+import juneCadavez from '../../assets/images/roles/June Cadavez.png';
 
 interface RolesWidgetProps {
   carlyYatesProps?: {
@@ -48,13 +53,17 @@ interface RolesWidgetProps {
   onInit?: (
     carlyYatesInstance: CarlyYatesRole,
     teresaJuarez: TeresaJuarezRole,
-    toggleCommonRole: () => void,
+    toggleCommonRole: (visible: boolean) => void,
   ) => void;
 }
 
 const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
-  const { onInit, carlyYatesProps, teresaJuarezProps, showFreeDialogue = false } =
-    props;
+  const {
+    onInit,
+    carlyYatesProps,
+    teresaJuarezProps,
+    showFreeDialogue = false,
+  } = props;
   const mainPanel = useRef<HTMLDivElement>(null);
   const carlyYatesRole = useRef<CarlyYatesRole>();
   // @ts-ignore
@@ -101,6 +110,8 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
       .add('tomSive01', tomSive01)
       .add('tomSive02', tomSive02)
       .add('carlyYatesToolbar', carlyYatesToolbar)
+      .add('titoDias', titoDias)
+      .add('juneCadavez', juneCadavez)
       .load(function () {
         const carlyYates = new CarlyYatesRole(
           app,
@@ -108,6 +119,7 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
           carlyYatesProps?.position
             ? carlyYatesProps.position
             : { x: 260, y: 190 },
+          ['carlyYates01', 'carlyYates04'],
         );
 
         const teresaJuarez = new TeresaJuarezRole(
@@ -129,6 +141,11 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
         pelinVenz.setSacle({ x: 0.5, y: 0.5 });
 
         const w2 = new BaseRole(app, 'w2', { x: 1644, y: 467 });
+        const titoDias = new BaseRole(app, 'titoDias', { x: 1527, y: 601 });
+        const juneCadavez = new BaseRole(app, 'juneCadavez', {
+          x: 1440,
+          y: 720,
+        });
 
         const damonMenson = new BaseRole<PIXI.Sprite>(
           app,
@@ -137,10 +154,16 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
         );
         showFreeDialogue && damonMenson.showMessage(damonMensonMsg, 2, 178, 70);
 
-        const emmyElsner = new BaseRole(app, ['emmyElsner01', 'emmyElsner02'], {
-          x: 540,
-          y: 40,
-        });
+        const emmyElsner = new BaseRole(
+          app,
+          ['emmyElsner01', 'emmyElsner02'],
+          {
+            x: 540,
+            y: 40,
+          },
+          true,
+          false,
+        );
 
         emmyElsner.move();
 
@@ -174,10 +197,37 @@ const RolesWidget: React.FC<RolesWidgetProps> = (props) => {
         });
         showFreeDialogue && tomSive.showMessage(jamesAnyeniMsg4, 8, 394, 84);
 
-        onInit?.(carlyYates, teresaJuarez, () => {
+        [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
+          const instance = item.getInstance();
+          const position = instance.position;
+          const width = instance.width;
+          const height = instance.height;
+
+          instance.anchor.set(0.5, 0.5);
+          instance.position.set(
+            _add(position.x, _divide(width, 2)),
+            _add(position.y, _divide(height, 2)),
+          );
+        });
+
+        onInit?.(carlyYates, teresaJuarez, (visible) => {
           [jadeKinzel, jamesAnyeni, surinPotter].forEach((item) => {
-            const instance = item.getInstance();
-            instance.visible = !instance.visible;
+            setTimeout(() => {
+              new TWEEN.Tween(item.getInstance())
+                .to(
+                  {
+                    scale: {
+                      x: visible ? 1 : 0,
+                      y: visible ? 1 : 0,
+                    },
+                    rotation: visible ? 0 : 1,
+                  },
+                  900,
+                )
+                .easing(TWEEN.Easing.Elastic.InOut)
+                .start();
+              animate();
+            }, _random(0, 300));
           });
         });
       });
