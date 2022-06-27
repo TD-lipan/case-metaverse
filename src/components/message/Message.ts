@@ -6,15 +6,34 @@ import _divide from 'lodash/divide';
 import React from 'react';
 import * as PIXI from 'pixi.js';
 
+function pxToNumber(value: number | string) {
+  return typeof value === 'string'
+    ? parseFloat(value.replace('px', ''))
+    : value;
+}
+
 export function calculatePositionBySizeAndCenterPoint(
-  width: number,
-  height: number,
+  width: number | string,
+  height: number | string,
   centerPoint: PIXI.IPointData,
 ) {
+  const w = pxToNumber(width);
+  const h = pxToNumber(height);
+
   return {
-    x: _subtract(centerPoint.x, _divide(width, 2)),
-    y: _subtract(centerPoint.y, height),
+    x: _subtract(centerPoint.x, _divide(w, 2)),
+    y: _subtract(centerPoint.y, h),
   };
+}
+
+interface MessageStyle extends React.CSSProperties {
+  width?: number;
+  height?: number;
+}
+
+interface OtherProps {
+  showAnimationName?: string;
+  hideAnimationName?: string;
 }
 
 export default class Message {
@@ -22,8 +41,11 @@ export default class Message {
   private imgElem: HTMLImageElement | null = null;
   private rootElem: HTMLDivElement | null = null;
   private containerElem: HTMLDivElement | null = null;
+  private otherProps: OtherProps | undefined = undefined;
 
-  constructor(src: string, style?: React.CSSProperties) {
+  constructor(src: string, style?: MessageStyle, otherProps?: OtherProps) {
+    this.otherProps = otherProps;
+
     setTimeout(() => {
       this.rootElem = document.querySelector('.popup-container-wrapper');
       this.containerElem = document.querySelector('.popup-container');
@@ -59,22 +81,44 @@ export default class Message {
           this.imgElem.style.position = 'absolute';
           this.imgElem.style.display = 'none';
           this.imgElem.style.objectFit = 'cover';
-          _assign(this.imgElem.style, style);
+          _assign(this.imgElem.style, {
+            ...style,
+            width: style?.width ? style.width + 'px' : 'auto',
+            height: style?.height ? style.height + 'px' : 'auto',
+          });
           this.containerElem.appendChild(this.imgElem);
         }
       });
     });
   }
 
-  public show(x: number, y: number, delay?: number) {
+  public showByCenterPosition(
+    roleCenterPosition: PIXI.IPointData,
+    delay: number = 0,
+    offset: PIXI.IPointData = { x: 0, y: 0 },
+  ) {
+    if (this.imgElem) {
+      const box = calculatePositionBySizeAndCenterPoint(
+        this.imgElem.style.width,
+        this.imgElem.style.height,
+        roleCenterPosition,
+      );
+
+      this.show(_add(box.x, offset.x), _add(box.y, offset.y), delay);
+    }
+  }
+
+  public show(x: number, y: number, delay: number = 0) {
     if (this.imgElem) {
       this.imgElem.style.left = x + 'px';
       this.imgElem.style.top = y + 'px';
       this.imgElem.style.display = 'block';
-      this.imgElem.classList.add('animate__bounceIn');
+      this.imgElem.className = this.otherProps?.showAnimationName
+        ? this.otherProps?.showAnimationName
+        : 'animate__bounceIn';
     }
 
-    if (delay != null) setTimeout(() => this.hide(), delay);
+    if (delay) setTimeout(() => this.hide(), delay);
   }
 
   public getImgInstance(): Promise<HTMLImageElement> {
@@ -104,7 +148,9 @@ export default class Message {
 
   public hide() {
     if (this.imgElem) {
-      this.imgElem.className = 'animate__bounceOut';
+      this.imgElem.className = this.otherProps?.hideAnimationName
+        ? this.otherProps?.hideAnimationName
+        : 'animate__bounceOut';
     }
     setTimeout(() => {
       this.imgElem?.remove();

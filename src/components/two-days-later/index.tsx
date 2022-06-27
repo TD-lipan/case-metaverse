@@ -7,6 +7,7 @@ import useDrag from '@/hooks/use-drag';
 import RolesWidget from '../roles';
 import CarlyYatesRole from '../roles/CarlyYatesRole';
 import TeresaJuarezRole from '../roles/TeresaJuarezRole';
+import * as PIXI from 'pixi.js';
 import Message, {
   calculatePositionBySizeAndCenterPoint,
 } from '@/components/message/Message';
@@ -15,6 +16,9 @@ import styles from './index.less';
 
 import callDrag from './images/call_drag.png';
 import callImg from '@/assets/Call- icon@2x.png';
+import Red from '@/assets/images/roles/Red.png';
+import Blue from '@/assets/images/roles/Blue.png';
+import Green from '@/assets/images/roles/Green.png';
 import notificationImg from '@/assets/Notification.png';
 import { useCallback } from 'react';
 
@@ -42,8 +46,62 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
     setCallVisible(false);
     setProfileVisible(false);
     setTimeout(() => {
+      carlyYates.current && popFireworks(carlyYates.current.getCenterPoint());
       setNotificationVisible(true);
     }, 500);
+  }, []);
+
+  const popFireworks = useCallback((centerPosition: PIXI.IPointData) => {
+    const blueImg = new Message(
+      Blue,
+      {
+        width: 206,
+        height: 146,
+        animationDuration: '0.85s',
+      },
+      {
+        showAnimationName:
+          'animate__animated animate__bounceIn animate__infinite',
+      },
+    );
+
+    setTimeout(() => {
+      blueImg.showByCenterPosition(centerPosition, 0, { x: 7, y: 118 });
+    }, 550);
+
+    const redImg = new Message(
+      Red,
+      {
+        width: 197,
+        height: 130,
+        animationDuration: '1.1s',
+      },
+      {
+        showAnimationName:
+          'animate__animated animate__bounceIn animate__infinite',
+      },
+    );
+
+    setTimeout(() => {
+      redImg.showByCenterPosition(centerPosition, 0, { x: -7, y: 120 });
+    }, 400);
+
+    const greenImg = new Message(
+      Green,
+      {
+        width: 176,
+        height: 96,
+        animationDuration: '1s',
+      },
+      {
+        showAnimationName:
+          'animate__animated animate__bounceIn animate__infinite',
+      },
+    );
+
+    setTimeout(() => {
+      greenImg.showByCenterPosition(centerPosition, 0, { x: -4, y: 71 });
+    }, 200);
   }, []);
 
   useLayoutEffect(() => {
@@ -53,23 +111,19 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
 
       if (!cy || !tj) return;
 
-      const callBoxW = 120;
-      const callBoxH = 120;
+      const cyCenterPosition = cy.getCenterPoint();
       const callBox = new Message(callImg, {
-        width: callBoxW + 'px',
-        height: callBoxH + 'px',
+        width: 120,
+        height: 120,
         cursor: 'pointer',
         animationDuration: '1.2s',
       });
 
-      const callBoxP = calculatePositionBySizeAndCenterPoint(
-        callBoxW,
-        callBoxH,
-        cy.getCenterPoint(),
-      );
-
       setTimeout(() => {
-        callBox.show(callBoxP.x + 5, callBoxP.y);
+        callBox.showByCenterPosition(cyCenterPosition, 0, {
+          x: 5,
+          y: 0,
+        });
         callBox.getImgInstance().then((elem) => {
           elem.className = 'animate__animated animate__tada animate__infinite';
           elem.addEventListener('click', () => {

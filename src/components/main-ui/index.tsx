@@ -71,8 +71,8 @@ export default function ({
     currentMessage.current?.hide();
 
     const messageBox = new Message(src, {
-      width: width + 'px',
-      height: height + 'px',
+      width,
+      height,
       cursor: isLast ? 'pointer' : 'unset',
     });
 
@@ -85,13 +85,14 @@ export default function ({
       );
     }
 
-    const position = calculatePositionBySizeAndCenterPoint(
-      width,
-      height,
-      sprite.getCenterPoint(),
+    setTimeout(
+      () =>
+        messageBox.showByCenterPosition(sprite.getCenterPoint(), 0, {
+          x: 0,
+          y: -8,
+        }),
+      300,
     );
-
-    setTimeout(() => messageBox.show(position.x, position.y - 8), 300);
 
     currentMessage.current = messageBox;
   }, []);
@@ -105,19 +106,15 @@ export default function ({
 
       cy.move1();
 
-      const airpodsBoxW = 192;
-      const airpodsBoxH = 166;
       const airpodsBox = new Message(airpods, {
-        width: airpodsBoxW + 'px',
-        height: airpodsBoxH + 'px',
+        width: 192,
+        height: 166,
         cursor: 'pointer',
       });
 
-      const recommendBoxW = 332;
-      const recommendBoxH = 178;
       const recommendBox = new Message(agentRecommend, {
-        width: recommendBoxW + 'px',
-        height: recommendBoxH + 'px',
+        width: 332,
+        height: 178,
         cursor: 'pointer',
       });
 
@@ -125,23 +122,19 @@ export default function ({
         elem.addEventListener('mouseover', () => (elem.src = airpodsHover));
         elem.addEventListener('mouseout', () => (elem.src = airpods));
         elem.addEventListener('click', () => {
-          const recommendBoxP = calculatePositionBySizeAndCenterPoint(
-            recommendBoxW,
-            recommendBoxH,
-            tj.getCenterPoint(),
-          );
           setTimeout(() => airpodsBox.hide(), 0);
-          recommendBox.show(recommendBoxP.x, recommendBoxP.y - 8, 2000);
+          recommendBox.showByCenterPosition(tj.getCenterPoint(), 2000, {
+            x: 0,
+            y: -8,
+          });
         });
       });
 
       setTimeout(() => {
-        const airpodsBoxP = calculatePositionBySizeAndCenterPoint(
-          airpodsBoxW,
-          airpodsBoxH,
-          cy.getCenterPoint(),
-        );
-        airpodsBox.show(_subtract(airpodsBoxP.x, 48), airpodsBoxP.y);
+        airpodsBox.showByCenterPosition(cy.getCenterPoint(), 0, {
+          x: 48,
+          y: 0,
+        });
         setTimeout(() => tj.move1(), 700);
       }, 2300);
     });
