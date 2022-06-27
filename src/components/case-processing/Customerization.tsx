@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import styles from './index.less';
 import customerization from './images/customerization.gif';
 
-export default function () {
+export default function ({ marginRight }: { marginRight: number }) {
   const automaticTypingRef = useRef<HTMLElement>(null);
   const automaticTyping = (str: string) => {
     let str_ = '';
@@ -20,7 +20,7 @@ export default function () {
   };
   return (
     <>
-      <div className={styles.customization}>
+      <div className={styles.customization} style={{ marginRight: marginRight }}>
         <div
           className={styles.script}
           ref={automaticTypingRef}

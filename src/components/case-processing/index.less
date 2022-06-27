@@ -4,9 +4,10 @@
   position: absolute;
   top: 10px;
   left: 180px;
-  z-index: 1;
+  z-index: 2;
   background-image: url(./images/workspace.png);
   background-size: 100% auto;
+  transition: margin-left 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
 }
 
 .orderPaid {
@@ -17,10 +18,10 @@
 
 .orderPaidInput {
   width: 268px;
-  height: 50px;
+  height: 66px;
   position: absolute;
-  left: 204px;
-  bottom: 117px;
+  left: 24px;
+  top: 747px;
   z-index: 101;
   background-image: url(./images/order_paid_input.png);
   background-size: 100% auto;
@@ -50,9 +51,9 @@
   width: 666px;
   height: 85px;
   z-index: 10;
-  bottom: 117px;
+  top: 728px;
   position: absolute;
-  left: 197px;
+  left: 17px;
   cursor: text;
 }
 
@@ -93,6 +94,7 @@
   z-index: 10;
   background-image: url(./images/customization.png);
   background-size: 100% auto;
+  transition: margin-right 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
 }
 
 .infoMessage {
@@ -149,8 +151,8 @@
   height: 27px;
   position: absolute;
   z-index: 3;
-  bottom: 202px;
-  left: 197px;
+  top: 702px;
+  left: 17px;
 
   .clickArea {
     position: absolute;
@@ -169,8 +171,8 @@
   width: 36px;
   height: 102px;
   position: absolute;
-  left: 205px;
-  bottom: 100px;
+  left: 25px;
+  top: 729px;
   z-index: 300;
   cursor: pointer;
   background-size: 100% auto;
@@ -204,7 +206,7 @@
   z-index: 2;
   top: 380px;
   position: absolute;
-  left: 197px;
+  left: 17px;
   padding-left: 8px;
   padding-right: 8px;
   overflow-y: auto;
@@ -256,7 +258,7 @@
   z-index: 105;
   top: 270px;
   position: absolute;
-  left: 218px;
+  left: 37px;
   padding-left: 8px;
   padding-right: 8px;
   overflow-y: auto;

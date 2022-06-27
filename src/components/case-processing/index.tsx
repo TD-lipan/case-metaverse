@@ -5,13 +5,21 @@ import Customerization from './Customerization';
 import Workspace from './workspace';
 
 export default function () {
+  const [left, setLeft] = useState<number>(-880);
+  const [right, setRight] = useState<number>(-700);
+
+  useEffect(() => {
+    setLeft(0);
+    setRight(0);
+  }, [])
+
   return (
     <>
-      <Workspace />
+      <Workspace marginLeft={left} />
       <div className={styles.toolbar} />
       <div className={styles.customerToolbar} />
       <CustomerizationGif />
-      <Customerization />
+      <Customerization marginRight={right} />
     </>
   );
 }

@@ -34,7 +34,7 @@ const actions: Action[] = [
   { type: 'inbound', key: 10 },
   { type: 'outbound', key: 11 },
 ];
-export default function () {
+export default function ({ marginLeft }: { marginLeft: number }) {
   const {
     noDarg,
     draging,
@@ -60,47 +60,48 @@ export default function () {
 
   return (
     <>
-      <div className={styles.workspace} />
-      <WorkFlow step={workFlowStep} />
-      <ChartArea onStartDarg={onStartDarg} step={step} setStep={setStep} />
-      {/* <img className={styles.callDarg} src={callDrag} onDragStart={noDarg} style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }} /> */}
+      <div className={styles.workspace} style={{ marginLeft: marginLeft }}>
+        <WorkFlow step={workFlowStep} />
+        <ChartArea onStartDarg={onStartDarg} step={step} setStep={setStep} />
+        <div
+          className={`${styles.targetArea} ${targetAreaHover}`}
+          onMouseOver={onEndMouseOver}
+          onMouseLeave={onEndMouseLeave}
+        ></div>
+
+        {isDraged && step < 12 && (
+          <div
+            className={styles.orderPaidInput}
+            onClick={() => setIsDraged(false)}
+          ></div>
+        )}
+
+        <ChannelBar />
+
+
+        <AutomaticTyping
+          width={666}
+          height={85}
+          left={13}
+          top={725}
+          sendWidth={70}
+          sendHeight={24}
+          sendLeft={769}
+          sendTop={835}
+          onInBound={(action: Action) => {
+            setStep(Number(action.key) + 1);
+          }}
+          onOutBound={(action: Action) => {
+            setStep(Number(action.key) + 1);
+          }}
+          actions={actions}
+        />
+      </div>
       <img
         className={styles.orderDetailsDrag}
         src={orderDetailsDrag}
         onDragStart={noDarg}
         style={{ display: draging ? 'block' : 'none', left: dragX, top: dragY }}
-      />
-      <div
-        className={`${styles.targetArea} ${targetAreaHover}`}
-        onMouseOver={onEndMouseOver}
-        onMouseLeave={onEndMouseLeave}
-      ></div>
-
-      {isDraged && step < 12 && (
-        <div
-          className={styles.orderPaidInput}
-          onClick={() => setIsDraged(false)}
-        ></div>
-      )}
-
-      <ChannelBar />
-
-      <AutomaticTyping
-        width={666}
-        height={85}
-        left={197}
-        top={736}
-        sendWidth={70}
-        sendHeight={24}
-        sendLeft={769}
-        sendTop={835}
-        onInBound={(action: Action) => {
-          setStep(Number(action.key) + 1);
-        }}
-        onOutBound={(action: Action) => {
-          setStep(Number(action.key) + 1);
-        }}
-        actions={actions}
       />
     </>
   );
