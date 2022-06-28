@@ -74,6 +74,7 @@ export default function ({
       width,
       height,
       cursor: isLast ? 'pointer' : 'unset',
+      pointerEvents: isLast ? 'auto' : 'none',
     });
 
     if (isLast) {
@@ -112,12 +113,14 @@ export default function ({
         width: 192,
         height: 166,
         cursor: 'pointer',
+        pointerEvents: 'auto',
       });
 
       const recommendBox = new Message(agentRecommend, {
         width: 332,
         height: 178,
         cursor: 'pointer',
+        pointerEvents: 'auto',
       });
 
       airpodsBox.getImgInstance().then((elem) => {

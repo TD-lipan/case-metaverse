@@ -58,6 +58,7 @@ export default class Message {
         this.rootElem.style.left = '0';
         this.rootElem.style.width = '1920px';
         this.rootElem.style.height = '1080px';
+        this.rootElem.style.pointerEvents = 'none';
         // @ts-ignore
         this.rootElem.style.zoom = 0.87;
         this.rootElem.style.zIndex = '1';

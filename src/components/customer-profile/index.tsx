@@ -6,6 +6,7 @@ import profile1_2 from './images/profile1_2.png';
 import profile2_1 from './images/profile2_0.png';
 import profile3_1 from './images/profile3_0.png';
 import profile4_1 from './images/profile4_0.png';
+import classNames from 'classnames';
 
 export default function ({
   left = 650,
@@ -25,7 +26,10 @@ export default function ({
   const [src, setSrc] = useState<string>(profile1_1);
   return (
     <div
-      className={styles.customerProfile}
+      className={classNames(
+        styles.customerProfile,
+        'animate__animated animate__bounceIn',
+      )}
       style={{
         top: top + 'px',
         left: left + 'px',

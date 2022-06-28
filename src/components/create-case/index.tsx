@@ -4,6 +4,7 @@ import create_case01 from './images/create_case01.png';
 import create_case02 from './images/create_case02.png';
 import create_case03 from './images/create_case03.png';
 import { Scene } from '@/pages/use-scene';
+import classNames from 'classnames';
 
 export default function ({
   left = 650,
@@ -20,7 +21,10 @@ export default function ({
   return (
     <>
       <div
-        className={styles.createCase}
+        className={classNames(
+          styles.createCase,
+          'animate__animated animate__bounceIn',
+        )}
         style={{
           top: top + 'px',
           left: left + 'px',

@@ -116,12 +116,17 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
 
       if (!cy || !tj) return;
 
+      cy.bindForMenu('click', () => {
+        setTimeout(() => setProfileVisible((visible) => !visible));
+      });
+
       const cyCenterPosition = cy.getCenterPoint();
       const callBox = new Message(callImg, {
         width: 120,
         height: 120,
         cursor: 'pointer',
         animationDuration: '1.2s',
+        pointerEvents: 'auto',
       });
 
       setTimeout(() => {
@@ -134,7 +139,6 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
           elem.addEventListener('click', () => {
             callBox.hide();
             setCallVisible(true);
-            setTimeout(() => setProfileVisible(true), 1000);
           });
         });
       }, 500);

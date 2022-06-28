@@ -22,9 +22,9 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
 
     const sprite = this.getInstance();
     sprite.interactive = true;
+    sprite.cursor = 'pointer';
     this.jumpResources = jumpResources;
     this.menuInstance = this.initMenuInstance();
-
     this.groupInstance = new PIXI.Container();
     this.groupInstance.interactive = true;
     this.groupInstance.zIndex = 1;
@@ -41,6 +41,7 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     const app = this.getApp();
 
     instance.stop();
+    this.menuInstance.visible = false;
     instance.textures = this.jumpResources.reduce(
       (textures: PIXI.Texture[], res: string) => {
         const texture = app.loader.resources[res].texture;
@@ -67,6 +68,7 @@ export default class CarlyYatesRole extends BaseRole<PIXI.AnimatedSprite> {
     menuInstance.interactive = true;
     menuInstance.scale.set(0.5, 0.5);
     menuInstance.visible = false;
+    menuInstance.cursor = 'pointer';
 
     return menuInstance;
   }

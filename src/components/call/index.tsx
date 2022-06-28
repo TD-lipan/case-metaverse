@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './index.less';
 import call_on_going from './images/call_on_going.png';
 import call_wrap_up from './images/call_wrap_up.png';
+import classNames from 'classnames';
 
 export default function ({
   left = 182,
@@ -18,7 +19,7 @@ export default function ({
 
   return (
     <div
-      className={styles.call}
+      className={classNames(styles.call, 'animate__animated animate__bounceIn')}
       style={{
         top: top + 'px',
         left: left + 'px',
