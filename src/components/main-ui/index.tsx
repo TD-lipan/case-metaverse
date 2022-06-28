@@ -1,5 +1,5 @@
 import { Scene } from '@/pages/use-scene';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import CreateCase from '../create-case';
 import FilterBar from '../filter-bar';
 import RolesWidget from '@/components/roles';
@@ -154,6 +154,13 @@ export default function ({
     });
   }, []);
 
+  useEffect(() => {
+    return () => {
+      const container = document.querySelector('.popup-container');
+      container && (container.innerHTML = '');
+    };
+  }, []);
+
   return (
     <>
       <RolesWidget
@@ -170,7 +177,7 @@ export default function ({
       <CustomerProfile
         isDraged={isDraged}
         visible={profileVisible}
-        isEmpty={false}
+        isEmpty={true}
         onClick={handleClick}
       />
       <InputBox actions={actions} onInBound={onInput} onOutBound={onInput} />

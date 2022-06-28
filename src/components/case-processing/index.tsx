@@ -11,10 +11,11 @@ export default function () {
   useEffect(() => {
     setLeft(0);
     setRight(0);
-  }, [])
+  }, []);
 
   return (
     <>
+      <div className={styles.mask}></div>
       <Workspace marginLeft={left} />
       <div className={styles.toolbar} />
       <div className={styles.customerToolbar} />

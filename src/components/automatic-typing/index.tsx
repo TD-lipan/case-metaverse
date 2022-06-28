@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 import classNames from 'classnames';
+import _divide from 'lodash/divide';
 
 import styles from './index.less';
 
@@ -97,7 +98,7 @@ export default function ({
         setIsTyping(false);
       }
       automaticTypingElem.innerHTML = tempText;
-    }, 20);
+    }, _divide(20, _divide(word.length, 50)));
   };
 
   useEffect(() => {

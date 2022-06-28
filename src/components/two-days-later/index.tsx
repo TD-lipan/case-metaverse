@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 
 import FilterBar from '../filter-bar';
 import CustomerProfile from '../customer-profile';
@@ -22,7 +22,13 @@ import Green from '@/assets/images/roles/Green.png';
 import notificationImg from '@/assets/Notification.png';
 import { useCallback } from 'react';
 
-export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
+export default function ({
+  showCommonRoles = true,
+  onToggleCommonRole = (flag: boolean) => {},
+}: {
+  showCommonRoles?: boolean;
+  onToggleCommonRole: (flag: boolean) => void;
+}) {
   const {
     noDarg,
     draging,
@@ -43,14 +49,18 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
   const [notificationVisible, setNotificationVisible] = useState(false);
 
   const handleClick = useCallback(() => {
+    const cy = carlyYates.current;
+
+    if (!cy) return;
+
     setCallVisible(false);
     setProfileVisible(false);
+    cy.toggleMenu();
+
     setTimeout(() => {
-      if (carlyYates.current) {
-        popFireworks(carlyYates.current);
-        setNotificationVisible(true);
-      }
-    }, 1000);
+      popFireworks(cy);
+      setNotificationVisible(true);
+    }, 5000);
   }, []);
 
   const popFireworks = useCallback((cy: CarlyYatesRole) => {
@@ -145,6 +155,13 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      const container = document.querySelector('.popup-container');
+      container && (container.innerHTML = '');
+    };
+  }, []);
+
   return (
     <>
       <RolesWidget
@@ -187,6 +204,7 @@ export default function ({ showCommonRoles }: { showCommonRoles: boolean }) {
         type={showCommonRoles ? 'default' : 'selected'}
         onClick={(flag) => {
           toggleCommonRole.current(flag);
+          onToggleCommonRole(flag);
         }}
       />
     </>

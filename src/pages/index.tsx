@@ -20,6 +20,10 @@ export default function IndexPage() {
     setShowCommonRoles(flag);
   }, []);
 
+  useEffect(() => {
+    setShowCommonRoles(true);
+  }, [scene]);
+
   return (
     <div>
       {scene === Scene.Login && <Login setScene={setScene} />}
@@ -32,7 +36,7 @@ export default function IndexPage() {
       )}
       {scene === Scene.CaseProcessing && <CaseProcessing />}
       {scene === Scene.TwoDaysLater && (
-        <TwoDaysLater showCommonRoles={showCommonRoles} />
+        <TwoDaysLater onToggleCommonRole={handleToggleCommonRole} />
       )}
 
       {scene !== Scene.Login && (
