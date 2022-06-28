@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './index.less';
 import profile1_0 from './images/profile1_0.png';
 import profile1_1 from './images/profile1_1.png';
@@ -11,7 +11,7 @@ import classNames from 'classnames';
 export default function ({
   left = 650,
   top = 244,
-  visible = true,
+  visible = false,
   isDraged,
   isEmpty = true,
   onClick = () => {},
@@ -24,16 +24,24 @@ export default function ({
   onClick?: () => void;
 }) {
   const [src, setSrc] = useState<string>(profile1_1);
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (visible && container.current) container.current.style.display = 'block';
+  }, [visible]);
+
   return (
     <div
+      ref={container}
       className={classNames(
         styles.customerProfile,
-        'animate__animated animate__bounceIn',
+        'animate__animated',
+        visible ? 'animate__bounceIn' : 'animate__bounceOut',
       )}
       style={{
         top: top + 'px',
         left: left + 'px',
-        display: visible ? 'block' : 'none',
+        display: 'none',
         position: 'relative',
       }}
     >

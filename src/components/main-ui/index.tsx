@@ -10,9 +10,11 @@ import _once from 'lodash/once';
 import _subtract from 'lodash/subtract';
 import { useState } from 'react';
 import { useMemo } from 'react';
+import useDrag from '@/hooks/use-drag';
 import Message, {
   calculatePositionBySizeAndCenterPoint,
 } from '@/components/message/Message';
+import CustomerProfile from '../customer-profile';
 import airpods from '@/assets/B Airpods default 3@2x.png';
 import airpodsHover from '@/assets/B Airpods hover@2x.png';
 import agentRecommend from '@/assets/B discount information@2x.png';
@@ -50,12 +52,19 @@ export default function ({
   setScene: React.Dispatch<React.SetStateAction<Scene>>;
   onToggleCommonRole: (flag: boolean) => void;
 }) {
+  const { isDraged } = useDrag();
   const carlyYates = useRef<CarlyYatesRole | null>(null);
   const teresaJuarez = useRef<TeresaJuarezRole | null>(null);
   const toggleCommonRole = useRef((visible: boolean) => {});
   const currentMessage = useRef<Message>();
 
   const [createCaseVisible, setCreateCaseVisible] = useState(false);
+
+  const [profileVisible, setProfileVisible] = useState(false);
+
+  const handleClick = useCallback(() => {
+    setProfileVisible(false);
+  }, []);
 
   const onInput = useCallback((action: Action) => {
     if (action.type === 'typing') return;
@@ -151,9 +160,18 @@ export default function ({
         showFreeDialogue={true}
         onInit={(cy, tj, fn) => {
           carlyYates.current = cy;
+          cy.bindForMenu('click', () => {
+            setTimeout(() => setProfileVisible((visible) => !visible));
+          });
           teresaJuarez.current = tj;
           toggleCommonRole.current = fn;
         }}
+      />
+      <CustomerProfile
+        isDraged={isDraged}
+        visible={profileVisible}
+        isEmpty={false}
+        onClick={handleClick}
       />
       <InputBox actions={actions} onInBound={onInput} onOutBound={onInput} />
       <CreateCase
